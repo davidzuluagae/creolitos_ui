@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/supabaseClient';
 import Link from 'next/link';
 import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 export default function LoginPage() {
@@ -109,7 +108,7 @@ export default function LoginPage() {
       
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-md">
         <div className="text-center">
-          <h2 className={`${lusitana.className} text-3xl font-bold text-gray-900`}>
+          <h2 className="text-3xl font-bold text-gray-900">
             {mode === 'login' 
               ? 'Sign in to your account' 
               : mode === 'register' 
