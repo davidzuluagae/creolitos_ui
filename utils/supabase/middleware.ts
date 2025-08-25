@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { getUserRoleFromJWT } from './roleUtils'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -37,6 +38,25 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // Get user role information from JWT token using the simplified utility
+  const { role: userRole } = await getUserRoleFromJWT(supabase);
+  
+  // Determine if the user has admin role - this check is done by the middleware
+  const hasAdminRole = userRole === 'admin';
+  
+  // Check if this is the auth callback route with a 'next' parameter pointing to admin
+  const isAuthCallback = request.nextUrl.pathname.startsWith('/auth/callback');
+  const requestedAdminAfterLogin = isAuthCallback && request.nextUrl.searchParams.get('next')?.startsWith('/admin');
+  
+  // Redirect non-admin users after login to public home page
+  if (user && requestedAdminAfterLogin && !hasAdminRole) {
+    console.error(`Access denied: User ${user.id} with role '${userRole}' attempted to access admin after login`);
+    const url = request.nextUrl.clone()
+    url.pathname = '/' // Redirect to home page
+    url.searchParams.delete('next') // Remove next parameter
+    return NextResponse.redirect(url)
+  }
+  
   // Check if this is a protected route that requires authentication
   const isProtectedRoute = request.nextUrl.pathname.startsWith('/admin') || 
                           request.nextUrl.pathname.startsWith('/dashboard');
@@ -46,12 +66,23 @@ export async function updateSession(request: NextRequest) {
                            request.nextUrl.pathname.startsWith('/auth') ||
                            request.nextUrl.pathname.startsWith('/error');
   
+  // Redirect to login if not logged in and trying to access protected route
   if (!user && isProtectedRoute) {
-    // No user and trying to access protected route - redirect to login
+    console.error(`Access denied: Unauthenticated user attempted to access ${request.nextUrl.pathname}`);
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-    // Pass the original URL as a parameter to redirect back after login
     url.searchParams.set('redirectTo', request.nextUrl.pathname)
+    return NextResponse.redirect(url)
+  }
+
+  // Check for admin role if accessing admin routes
+  if (user && request.nextUrl.pathname.startsWith('/admin') && !hasAdminRole) {
+    // Log unauthorized access attempt with detailed information
+    console.error(`Access denied: User ${user.id} with role '${userRole}' attempted to access admin route ${request.nextUrl.pathname}`);
+    
+    // Redirect non-admin users to home page instead of error page
+    const url = request.nextUrl.clone()
+    url.pathname = '/' // Redirect to home page
     return NextResponse.redirect(url)
   }
 

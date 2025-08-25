@@ -1,51 +1,22 @@
 import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
-import { createServerClient } from '@supabase/ssr';
 import { dynaPuff } from '@/app/ui/fonts';
 import Link from 'next/link';
-import SignOutButton from '@/app/ui/auth/signout-button';
+import LogInButton from '@/app/ui/auth/signout-button';
+import { createClient } from '@/utils/supabase/supabaseServer';
+import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
 
 // Layout component for admin pages with authentication
-export default async function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  // Check if user is authenticated and is an admin
-  const cookieStore = cookies();
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get: (name) => cookieStore.get(name)?.value,
-        set: (name, value, options) => cookieStore.set({ name, value, ...options }),
-        remove: (name, options) => cookieStore.set({ name, value: '', ...options }),
-      },
-    }
-  );
-  
-  const { data: { session } } = await supabase.auth.getSession();
-  
-  if (!session) {
+export default async function AdminLayout({children}: {children: React.ReactNode}) {
+    const supabase = await createClient();
+    const {data: user} = await supabase.auth.getUser()
+    if (!user) {
     // User is not logged in, redirect to login page
     redirect('/login');
   }
-  
-  // Here you would check if the user has admin role
-  // This is a placeholder for your actual admin check
-  // For example:
-  // const { data: userData } = await supabase
-  //   .from('users')
-  //   .select('role')
-  //   .eq('id', session.user.id)
-  //   .single();
-  //
-  // if (userData.role !== 'admin') {
-  //   redirect('/unauthorized');
-  // }
 
-  const userEmail = session.user.email;
+      const roleData = await getUserRoleFromJWT(supabase);
+
+  const userEmail = user.user?.email || 'No Email';
 
   return (
     <div className={`${dynaPuff.className} min-h-screen bg-gray-50`}>
@@ -57,20 +28,25 @@ export default async function AdminLayout({
             <nav className="flex space-x-4">
               <Link href="/admin" className="hover:underline">Dashboard</Link>
               <Link href="/admin/events" className="hover:underline">Events</Link>
-              <Link href="/main" className="hover:underline">View Site</Link>
+              <Link href="/" className="hover:underline">View Site</Link>
             </nav>
             
             <div className="ml-6 flex items-center">
               <span className="mr-2 text-sm hidden md:inline-block">
+                {roleData?.role || 'No Role'}:
+              </span>
+              <span className="mr-2 text-sm hidden md:inline-block">
                 {userEmail}
               </span>
-              <SignOutButton />
+              <LogInButton isLoggedIn={!!user.user} />
             </div>
           </div>
         </div>
       </div>
       
       <div className="container mx-auto px-4 pb-10">
+        <pre className="bg-gray-100 p-4 rounded overflow-auto max-w-full text-sm">
+        </pre>
         {children}
       </div>
     </div>

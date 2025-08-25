@@ -1,8 +1,6 @@
 'use client';
 import '@/app/ui/global.css';
 import { dynaPuff } from '@/app/ui/fonts';
-import { MDXProvider } from '@mdx-js/react';
-import { useMDXComponents } from '../mdx-components';
 
 export default function RootLayout({
   children,
@@ -22,9 +20,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${dynaPuff.className} antialiased`}>
-        <MDXProvider components={useMDXComponents()}>
-          {children}
-        </MDXProvider>
+        {children}
       </body>
     </html>
   );

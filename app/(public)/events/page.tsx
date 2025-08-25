@@ -72,7 +72,7 @@ export default async function EventsPage() {
                 </div>
                 
                 <Link
-                  href={`/main/events/${event.id}`}
+                  href={`/events/${event.id}`}
                   className="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
                 >
                   Learn More

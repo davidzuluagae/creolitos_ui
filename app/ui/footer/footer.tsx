@@ -73,11 +73,11 @@ export default function Footer() {
                 <div className="flex flex-col">
                     <h3 className="font-bold mb-4">Sitemap</h3>
                     <nav className="flex flex-col space-y-2">
-                        <Link href="/main" className="hover:underline">Home</Link>
-                        <Link href="/main/blog" className="hover:underline">Blog</Link>
-                        <Link href="/main/events" className="hover:underline">Events</Link>
-                        <Link href="/main/gallery" className="hover:underline">Gallery</Link>
-                        <Link href="/main/contact" className="hover:underline">Contact</Link>
+                        <Link href="/" className="hover:underline">Home</Link>
+                        <Link href="/blog" className="hover:underline">Blog</Link>
+                        <Link href="/events" className="hover:underline">Events</Link>
+                        <Link href="/gallery" className="hover:underline">Gallery</Link>
+                        <Link href="/contact" className="hover:underline">Contact</Link>
                     </nav>
                 </div>
                 

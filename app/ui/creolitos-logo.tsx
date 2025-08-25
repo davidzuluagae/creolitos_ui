@@ -17,6 +17,7 @@ export default function CreolitosLogo() {
         src="/creolitos_logo.png" 
         width={512} 
         height={200} 
+        style={{ height: 'auto' }} 
         className="hidden md:block relative z-20" 
         alt="Creolitos"
       />

@@ -5,45 +5,62 @@ import {
   HomeIcon,
   PhotoIcon,
   MicrophoneIcon,
-  InboxIcon
+  InboxIcon,
 } from '@heroicons/react/24/outline';
 import NavButton from './nav-button';
 
-// Map of links to display in the side navigation.
-// Depending on the size of the application, this would be stored in a database.
-const links = [
+// NavLink type definition
+export type NavLink = {
+  name: string;
+  href: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  description?: string;
+};
+
+// Array of navigation links
+export const navLinks: NavLink[] = [
   {
     name: 'Home',
-    href: '/main',
+    description: 'Return to the homepage',
+    href: '/',
     icon: HomeIcon
   },
   {
     name: 'Events',
-    href: '/main/events',
+    description: 'View our upcoming events',
+    href: '/events',
     icon: CalendarIcon,
   },
   {
     name: 'Gallery',
-    href: '/main/gallery',
+    description: 'View our photo gallery',
+    href: '/gallery',
     icon: PhotoIcon
   },
   {
     name: 'Blog',
-    href: '/main/blog',
+    description: 'Read our latest articles',
+    href: '/blog',
     icon: MicrophoneIcon
   },
   {
     name: 'Contact',
-    href: '/main/contact',
+    description: 'Get in touch with us',
+    href: '/contact',
     icon: InboxIcon
-  }
+  },
 ];
 
 export default function NavLinks() {
   return (
     <>
-      {links.map(({name, icon, href}) => (
-        <NavButton key={name} name={name} href={href} icon={icon}/>
+      {navLinks.map(({name, icon, href}) => (
+        <NavButton
+          key={name}
+          name={name}
+          href={href}
+          icon={icon}
+        />
       ))}
     </>
   );

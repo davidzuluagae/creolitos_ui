@@ -14,7 +14,7 @@ export default function Header() {
         {/* Content */}
         <Link
           className="flex flex-row mb-2 rounded-md p-4 justify-center relative z-10"
-          href="/main"
+          href="/"
         >
           <CreolitosLogo />
         </Link>

@@ -2,19 +2,18 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ReactElement } from 'react';
-
+import { LinkIcon } from '@heroicons/react/24/outline';
 
 interface NavButtonProps {
-    name: string;
-    href: string;
-    icon: React.ComponentType<{ className?: string }>;
-  }
-  
+  name: string;
+  href: string;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
 
 export default function NavButton({ name, href, icon: Icon }: NavButtonProps) {
   const pathname = usePathname();
-
+  Icon = Icon || LinkIcon;
   return (
     <Link
       href={href}

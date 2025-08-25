@@ -2,31 +2,36 @@
 
 import { createClient } from '@/utils/supabase/supabaseServer';
 import { revalidatePath } from 'next/cache';
+import { Database } from '@/types/supabase';
+
+// Define UUID type alias to make our intention clear
+type UUID = string;
 
 interface EventOccurrenceData {
   date: string;
   start_time: string;
   end_time: string;
-  description: string | null;
-  location: string | null;
+  description?: string;
+  location?: string;
 }
 
 interface EventSeriesData {
   title: string;
-  description: string | null;
-  location: string | null;
+  description?: string;
+  location?: string;
   price: number;
-  capacity: number | null;
+  capacity?: number;
   start_date: string;
   end_date: string;
-  category: string | null;
-  event_type: string | null;
-  host: string | null;
-  registration_deadline: string | null;
-  is_free: boolean;
+  category?: string;
+  event_type?: string;
+  host?: string;
+  registration_deadline?: string;
+  is_free?: boolean;
   is_recurring: boolean;
   is_single_event: boolean;
-  occurrence: EventOccurrenceData | null;
+  recurring_pattern?: any;
+  occurrence?: EventOccurrenceData;
 }
 
 export async function createEvent(formData: EventSeriesData) {
@@ -35,22 +40,27 @@ export async function createEvent(formData: EventSeriesData) {
     const supabase = await createClient();
     
     // Check if the user has admin privileges first
-    const { data: session } = await supabase.auth.getSession();
-    if (!session?.session) {
+    const { data } = await supabase.auth.getUser();
+    const user = data?.user;
+    if (!user) {
       return { 
         success: false, 
         error: 'You must be logged in to create events' 
       };
     }
+
     
+    // Explicitly treat user.id as UUID type
+    const userUUID: UUID = user.id;
+
     // Debug: Log user ID to confirm we're using the correct one
-    console.log('Checking admin role for user ID:', session.session.user.id);
+    console.log('Checking admin role for user ID:', userUUID);
     
-    // Get user profile with role - query needs to be adjusted for custom type
+    // Get user profile with role - now properly typed with UUID
     const { data: userProfile, error: profileError } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', session.session.user.id)
+      .eq('id', userUUID)
       .single();
     
     // Debug profile query results
@@ -108,82 +118,56 @@ export async function createEvent(formData: EventSeriesData) {
         .select();
 
       if (occurrenceError) {
-        // If occurrence creation fails, attempt to clean up the series
-        await supabase
-          .from('event_series')
-          .delete()
-          .eq('id', eventSeriesData[0].id);
-        
+        console.error('Error inserting event occurrence:', occurrenceError);
         return { success: false, error: occurrenceError.message };
       }
+
+      console.log('Created single event with occurrence:', occurrenceData);
+    } else if (formData.is_recurring && formData.recurring_pattern) {
+      // Call database function to generate occurrences based on recurring pattern
+      const { error: recurringError } = await supabase.rpc('generate_event_occurrences', {
+        p_series_id: eventSeriesData[0].id,
+        p_start_date: formData.start_date,
+        p_end_date: formData.end_date,
+        p_recurring_pattern: formData.recurring_pattern
+      });
+
+      if (recurringError) {
+        console.error('Error generating recurring occurrences:', recurringError);
+        return { success: false, error: recurringError.message };
+      }
+
+      console.log('Created recurring event series');
     }
 
-    // Revalidate the events pages
+    // Revalidate related paths to update UI
     revalidatePath('/admin/events');
-    revalidatePath('/main/events');
+    revalidatePath('/events');
     
-    return { 
-      success: true, 
-      data: eventSeriesData[0],
-      message: 'Event created successfully!' 
-    };
-  } catch (error: any) {
-    console.error('Error creating event:', error);
-    return { 
-      success: false, 
-      error: error.message || 'An unexpected error occurred'
-    };
+    return { success: true };
+  } catch (error) {
+    console.error('Error in createEvent server action:', error);
+    return { success: false, error: 'Failed to create event' };
   }
 }
 
 export async function fetchEvents() {
   try {
-    // Create Supabase client
     const supabase = await createClient();
     
-    // Fetch event series with their first occurrence
-    const { data: eventSeriesData, error: eventSeriesError } = await supabase
+    // Fetch all event series
+    const { data: events, error } = await supabase
       .from('event_series')
-      .select('*')
-      .order('start_date', { ascending: true });
-
-    if (eventSeriesError) {
-      return { success: false, error: eventSeriesError.message };
+      .select('*, event_occurrences(*)');
+      
+    if (error) {
+      console.error('Error fetching events:', error);
+      return { success: false, error: error.message };
     }
-
-    // For each event series, fetch its occurrences
-    const eventsWithOccurrences = await Promise.all(
-      eventSeriesData.map(async (series) => {
-        const { data: occurrences, error: occurrencesError } = await supabase
-          .from('event_occurrences')
-          .select('*')
-          .eq('series_id', series.id)
-          .order('date', { ascending: true });
-
-        if (occurrencesError) {
-          console.error('Error fetching occurrences for series', series.id, occurrencesError);
-          return {
-            ...series,
-            occurrences: []
-          };
-        }
-
-        return {
-          ...series,
-          occurrences: occurrences || []
-        };
-      })
-    );
     
-    return { 
-      success: true, 
-      data: eventsWithOccurrences
-    };
-  } catch (error: any) {
-    console.error('Error fetching events:', error);
-    return { 
-      success: false, 
-      error: error.message || 'An unexpected error occurred'
-    };
+    return { success: true, data: events };
+  } catch (error) {
+    console.error('Error in fetchEvents server action:', error);
+    return { success: false, error: 'Failed to fetch events' };
   }
 }

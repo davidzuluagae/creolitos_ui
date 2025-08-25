@@ -108,7 +108,7 @@ export default function LoginPage() {
       
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-md">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 className={`text-3xl font-bold text-gray-900`}>
             {mode === 'login' 
               ? 'Sign in to your account' 
               : mode === 'register' 
