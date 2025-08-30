@@ -1,6 +1,7 @@
 'use client';
 import '@/app/ui/global.css';
 import { dynaPuff } from '@/app/ui/fonts';
+import { AuthProvider } from '@/app/lib/auth-context';
 
 export default function RootLayout({
   children,
@@ -20,7 +21,9 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${dynaPuff.className} antialiased`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

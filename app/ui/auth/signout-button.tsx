@@ -18,6 +18,10 @@ export default function LogInButton({ isLoggedIn }: LogInButtonProps) {
     setIsLoading(true);
 
     try {
+      // Create Supabase client locally when needed
+      const supabase = createClient();
+      
+      // Call the server-side signout endpoint
       const response = await fetch('/auth/signout', {
         method: 'POST',
         credentials: 'include', // Important for cookies
@@ -30,6 +34,12 @@ export default function LogInButton({ isLoggedIn }: LogInButtonProps) {
         throw new Error('Server-side sign out failed');
       }
       
+      // Also sign out on the client side
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw error;
+      }
+
       // After successful signout, refresh the router and redirect
       router.refresh();
       router.push('/');

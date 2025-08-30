@@ -1,0 +1,93 @@
+'use client';
+
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createClient } from '@/utils/supabase/supabaseClient';
+import { User } from '@supabase/supabase-js';
+import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
+
+// Define the shape of your auth context
+interface AuthContextType {
+  user: User | null;
+  userRole: string | null;
+  isLoading: boolean;
+  checkAuth: () => Promise<void>;
+}
+
+// Create the context with default values
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  userRole: null,
+  isLoading: true,
+  checkAuth: async () => {},
+});
+
+// Custom hook for using the auth context
+export const useAuth = () => useContext(AuthContext);
+
+// The provider component that wraps your app
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const supabase = createClient();
+
+  // Function to check authentication status
+  const checkAuth = async () => {
+    setIsLoading(true);
+    try {
+      // Get the current session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // Set user if session exists
+      if (session) {
+        setUser(session.user);
+        
+        // Use the roleUtils utility to get user role from JWT
+        const { role } = await getUserRoleFromJWT(supabase);
+        setUserRole(role);
+      } else {
+        setUser(null);
+        setUserRole(null);
+      }
+    } catch (error) {
+      console.error('Error checking auth:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Check auth status when the component mounts
+  useEffect(() => {
+    checkAuth();
+    
+    // Set up a listener for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session) {
+          setUser(session.user);
+          
+          // Update role when auth state changes using roleUtils
+          const { role } = await getUserRoleFromJWT(supabase);
+          setUserRole(role);
+        } else {
+          setUser(null);
+          setUserRole(null);
+        }
+      }
+    );
+    
+    // Clean up the subscription
+    return () => {
+      subscription?.unsubscribe();
+    };
+  }, [supabase]);
+
+  const value = {
+    user,
+    userRole,
+    isLoading,
+    checkAuth,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
