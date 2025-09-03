@@ -30,15 +30,7 @@ export default function Header() {
 
           <div className="basis-64 flex flex-row items-stretch justify-end">
             {!isLoading && (
-              <>
-                <span className="mr-2 text-sm hidden md:inline-block">
-                  {userRole || ''}:
-                </span>
-                <span className="mr-2 text-sm hidden md:inline-block">
-                  {user?.email || ''}
-                </span>
-                <LogInButton isLoggedIn={!!user} />
-              </>
+                <LogInButton user={user} userRole={userRole} />
             )}
           </div>
         </div>
