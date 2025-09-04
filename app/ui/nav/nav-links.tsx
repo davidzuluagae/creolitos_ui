@@ -22,31 +22,31 @@ export const navLinks: NavLink[] = [
   {
     name: 'Home',
     description: 'Return to the homepage',
-    href: '/',
+    href: '#Hero',
     icon: HomeIcon
   },
   {
     name: 'Events',
     description: 'View our upcoming events',
-    href: '/events',
+    href: '#events',
     icon: CalendarIcon,
   },
   {
     name: 'Gallery',
     description: 'View our photo gallery',
-    href: '/gallery',
+    href: '#gallery',
     icon: PhotoIcon
   },
   {
     name: 'Blog',
     description: 'Read our latest articles',
-    href: '/blog',
+    href: '#blog',
     icon: MicrophoneIcon
   },
   {
     name: 'Contact',
     description: 'Get in touch with us',
-    href: '/contact',
+    href: '#contact',
     icon: InboxIcon
   },
 ];

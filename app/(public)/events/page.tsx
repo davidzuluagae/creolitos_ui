@@ -1,34 +1,35 @@
 import Link from 'next/link';
 import { formatDateToLocal } from '@/app/lib/utils';
 
+export const mockEvents = [
+  {
+    id: '1',
+    title: 'Summer Spanish Immersion Camp',
+    description: 'A week-long Spanish language immersion experience for children ages 5-12.',
+    date: '2025-07-15T09:00:00.000Z',
+    location: 'Central Community Center',
+    price: 250,
+  },
+  {
+    id: '2',
+    title: 'Caribbean Cooking Workshop',
+    description: 'Learn to cook authentic Caribbean dishes in this hands-on workshop.',
+    date: '2025-06-22T18:00:00.000Z',
+    location: 'Creolitos Cultural Center',
+    price: 75,
+  },
+  {
+    id: '3',
+    title: 'Latin Dance Night',
+    description: 'An evening of salsa, merengue, and bachata with professional instructors.',
+    date: '2025-05-30T20:00:00.000Z',
+    location: 'Downtown Dance Studio',
+    price: 30,
+  },
+];
+
 export default async function EventsPage() {
   // This is a placeholder for the actual data fetching from your database
-  const mockEvents = [
-    {
-      id: '1',
-      title: 'Summer Spanish Immersion Camp',
-      description: 'A week-long Spanish language immersion experience for children ages 5-12.',
-      date: '2025-07-15T09:00:00.000Z',
-      location: 'Central Community Center',
-      price: 250,
-    },
-    {
-      id: '2',
-      title: 'Caribbean Cooking Workshop',
-      description: 'Learn to cook authentic Caribbean dishes in this hands-on workshop.',
-      date: '2025-06-22T18:00:00.000Z',
-      location: 'Creolitos Cultural Center',
-      price: 75,
-    },
-    {
-      id: '3',
-      title: 'Latin Dance Night',
-      description: 'An evening of salsa, merengue, and bachata with professional instructors.',
-      date: '2025-05-30T20:00:00.000Z',
-      location: 'Downtown Dance Studio',
-      price: 30,
-    },
-  ];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
