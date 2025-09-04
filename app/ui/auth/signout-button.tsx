@@ -59,7 +59,7 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
   return !!user ? (
 
     <Menu as="div" className="relative inline-block text-left">
-      <MenuButton className='flex items-center rounded-xl bg-orange-100 border-2 border-black p-3 text-lg font-medium hover:bg-creolitos-100 md:p-2 md:px-3'>
+      <MenuButton className='flex items-center rounded-xl bg-orange-100 border-2 border-black p-3 text-lg font-medium hover:bg-creoSec-100 md:p-2 md:px-3'>
         <span className="mr-2 text-md hidden md:inline-block">
           {user?.email || ''}
         </span>
@@ -75,7 +75,7 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
         <MenuItem key={1} as="div" className="w-full">
           <Link
             href="/profile"
-            className="flex w-full justify-start items-center gap-2 text-lg hover:bg-creolitos-100 md:p-2 md:px-3"
+            className="flex w-full justify-start items-center gap-2 text-lg hover:bg-creoSec-100 md:p-2 md:px-3"
           >
             <UserIcon className="w-8" />
             <p className="hidden md:block">Profile</p>
@@ -85,7 +85,7 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
           <Button
             onClick={handleSignOut}
             disabled={isLoading}
-            className="flex w-full justify-start items-center gap-2 text-lg hover:bg-creolitos-600 hover:text-yellow-50 md:p-2 md:px-3 disabled:bg-gray-300 disabled:text-gray-500"
+            className="flex w-full justify-start items-center gap-2 text-lg hover:bg-creoLim-100 hover:text-yellow-50 md:p-2 md:px-3 disabled:bg-gray-300 disabled:text-gray-500"
             aria-label="Sign out"
           >
             <PowerIcon className="w-8" />

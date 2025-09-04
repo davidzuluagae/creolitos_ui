@@ -21,7 +21,7 @@ export default async function AdminLayout({children}: {children: React.ReactNode
 
   return (
     <div className={`${dynaPuff.className} min-h-screen bg-gray-50`}>
-      <div className="bg-creolitos-500 py-4 px-8 mb-6 shadow">
+      <div className="bg-creoPri-200 py-4 px-8 mb-6 shadow">
         <div className="container mx-auto flex justify-between items-center">
 <div className='flex items-center space-x-4'>
         <Link href="/">

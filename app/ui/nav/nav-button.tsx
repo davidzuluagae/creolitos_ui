@@ -20,9 +20,9 @@ export default function NavButton({ name, href, icon: Icon }: NavButtonProps) {
     <Link
       href={href}
       className={
-        clsx('flex grow justify-center items-center gap-2 rounded-2xl bg-orange-100 border-2 border-black p-3 text-lg font-medium hover:bg-creolitos-100 md:justify-start md:p-2 md:px-3',
+        clsx('flex grow justify-center items-center gap-2 rounded-2xl bg-orange-100 border-2 border-black p-3 text-lg font-medium hover:bg-creoSec-100 md:justify-start md:p-2 md:px-3',
           {
-            'bg-creolitos-500 text-yellow-50': pathname === href,
+            'bg-creoPri-200 text-yellow-50': pathname === href,
           },
         )
       }
