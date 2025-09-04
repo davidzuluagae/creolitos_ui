@@ -10,11 +10,11 @@ export default function Header() {
   const { user, userRole, isLoading } = useAuth();
 
   return (
-    <div className="sticky top-0 z-50 shadow bg-slate-50 w-full">
-      <div className="flex grow flex-row items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2 relative z-10">
+    <div className="sticky top-0 shadow bg-slate-50 w-full">
+      <div className="flex grow flex-row items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2">
 
         <Link
-          className="flex flex-row mb-2 rounded-md p-4 justify-center relative z-10"
+          className="flex flex-row mb-2 rounded-md p-4 justify-center"
           href="/"
         >
           <CreolitosLogoSM />
