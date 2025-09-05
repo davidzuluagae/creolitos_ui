@@ -10,7 +10,7 @@ export default function Header() {
   const { user, userRole, isLoading } = useAuth();
 
   return (
-    <div className="sticky top-0 shadow bg-slate-50 w-full">
+    <div className="sticky top-0 shadow bg-creoCont-neutral1 w-full">
       <div className="flex grow flex-row items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2">
 
         <Link

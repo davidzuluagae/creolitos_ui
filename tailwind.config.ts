@@ -42,14 +42,14 @@ const config: Config = {
         },
 
         // Creolitos Contrast
-        // cool colors for playful and modern feel
         // bright colors for child-friendly elements
+        // purples for section dividers, subtle gradients.
         // neutral for backgrounds
         creoCont: {
-          cool1: "#3BA7C0", 
-          cool2: "#2589FE",
-          bright1: "#A6E3B5",
-          bright2: "#FFD95E",
+          mint: "#A6E3B5",
+          yellow: "#FFD95E",
+          purple100: "#BFA2DB",
+          purple200: "#9B6BFF",
           neutral1: "#F9F9F9", // off-white
         },
       },
