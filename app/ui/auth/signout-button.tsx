@@ -59,11 +59,11 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
   return !!user ? (
 
     <Menu as="div" className="relative inline-block text-left">
-      <MenuButton className='flex items-center rounded-xl bg-orange-100 border-2 border-black p-3 text-lg font-medium hover:bg-creoSec-100 md:p-2 md:px-3'>
-        <span className="mr-2 text-md hidden md:inline-block">
+      <MenuButton className='flex items-center gap-2 px-4 py-2 rounded-xl bg-creoPri-200 text-white font-medium hover:bg-creoPri-100 transition-colors'>
+        <span className="mr-2 font-medium hidden md:inline-block">
           {user?.email || ''}
         </span>
-        <span className="mr-2 text-sm hidden md:inline-block">
+        <span className="mr-2 text-xs text-creoLim-200 hidden md:inline-block">
           {userRole || ''}
         </span>
         <ChevronDownIcon className="size-5" aria-hidden="true" />
@@ -71,11 +71,11 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
       <MenuItems
         transition
         anchor="bottom end"
-        className="w-52 absolute z-[9999] rounded-lg bg-orange-100 shadow-lg ring-1 ring-black ring-opacity-5 transition duration-100 ease-out focus:outline-none data-closed:scale-95 data-closed:opacity-0">
+        className="w-52 absolute z-[9999] rounded-xl border border-creoSec-300 bg-creoCont-neutral1 shadow-lg transition duration-100 ease-out focus:outline-none data-closed:scale-95 data-closed:opacity-0">
         <MenuItem key={1} as="div" className="w-full">
           <Link
             href="/profile"
-            className="flex w-full justify-start items-center gap-2 text-lg hover:bg-creoSec-100 md:p-2 md:px-3"
+            className="flex w-full justify-start items-center gap-2 px-4 py-2 hover:bg-creoSec-100 cursor-pointer text-creoLim-300"
           >
             <UserIcon className="w-8" />
             <p className="hidden md:block">Profile</p>
@@ -85,7 +85,7 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
           <Button
             onClick={handleSignOut}
             disabled={isLoading}
-            className="flex w-full justify-start items-center gap-2 text-lg hover:bg-creoLim-100 hover:text-yellow-50 md:p-2 md:px-3 disabled:bg-gray-300 disabled:text-gray-500"
+            className="flex w-full justify-start items-center gap-2 px-4 py-2 text-red-600 hover:bg-creoSec-200 cursor-pointer disabled:bg-gray-300 disabled:text-gray-500"
             aria-label="Sign out"
           >
             <PowerIcon className="w-8" />

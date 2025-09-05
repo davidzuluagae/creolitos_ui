@@ -19,17 +19,21 @@ export default function NavButton({ name, href, icon: Icon }: NavButtonProps) {
   return (
     <Link
       href={href}
-      className={
-        clsx('flex grow justify-center items-center gap-2 rounded-2xl bg-orange-100 border-2 border-black p-3 text-lg font-medium hover:bg-creoSec-100 md:justify-start md:p-2 md:px-3',
-          {
-            'bg-creoPri-200 text-yellow-50': pathname === href,
-          },
-        )
-      }
-
+      className={clsx(
+        "flex items-center gap-2 rounded-full px-4 text-base font-medium transition-all duration-200",
+        "hover:bg-creoSec-100 hover:shadow-sm",
+        pathname === href
+          ? "bg-creoPri-200 text-white shadow-md"
+          : "bg-creoCont-neutral1 text-creoLim-200"
+      )}
     >
-      <Icon className="w-8" />
-      <p className="hidden md:block">{name}</p>
+      <Icon
+        className={clsx(
+          "w-5 h-5 transition-colors",
+          pathname === href ? "text-white" : "text-creoLim-200"
+        )}
+      />
+      <span className="hidden md:inline tracking-wide">{name}</span>
     </Link>
   );
 }

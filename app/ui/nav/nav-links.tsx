@@ -51,9 +51,13 @@ export const navLinks: NavLink[] = [
   },
 ];
 
-export default function NavLinks() {
+export interface NavLinksProps {
+  className?: string;
+}
+
+export default function NavLinks({ className }: NavLinksProps) {
   return (
-    <>
+    <div className={`flex flex-row items-center justify-center ${className}`}>
       {navLinks.map(({name, icon, href}) => (
         <NavButton
           key={name}
@@ -62,6 +66,6 @@ export default function NavLinks() {
           icon={icon}
         />
       ))}
-    </>
+    </div>
   );
 }

@@ -1,24 +1,53 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function CreolitosLogo() {
+export interface CreolitosLogoProps {
+  className?: string;
+  showSubtitle?: boolean;
+  width?: number;
+  height?: number;
+}
+
+export function CreolitosLogo({ 
+  className, 
+  showSubtitle, 
+  width = 512, 
+  height = 200 
+}: CreolitosLogoProps) {
   return (
-    <div className="relative overflow-visible rounded-lg px-8">
-      {/* Elliptical gradient background with extended width */}
-      <div 
-        className="absolute -left-8 -right-8 top-0 -bottom-4 z-0" 
-        style={{ 
-          background: 'radial-gradient(ellipse, rgba(255,255,255,0.8) 80%, rgba(255,255,255,0) 100%)',
-        }}
-      ></div>
-      
-      {/* Logo image */}
+    <div className="flex flex-col align-middle p-0">
       <Image 
         src="/creolitos_logo.png" 
-        width={512} 
-        height={200} 
+        width={width} 
+        height={height} 
         style={{ height: 'auto' }} 
-        className="hidden md:block relative z-20" 
+        className={className}
+        alt="Creolitos"
+      />
+      {showSubtitle && <h1 className='text-center text-lg py-2'>Multicultural & Multilingual Education</h1>}
+    </div>
+  );
+}
+
+export interface CreolitosLogoSmProps {
+  className?: string;
+  width?: number;
+  height?: number;
+}
+
+export function CreolitosLogoSM({ 
+  className, 
+  width = 50, 
+  height = 50 
+}: CreolitosLogoSmProps) {
+  return (
+    <div className="flex flex-col align-middle p-0">
+      <Image 
+        src="/creolitos_sm.png" 
+        width={width} 
+        height={height} 
+        style={{ height: 'auto' }} 
+        className={className || "hidden md:block relative z-20"}
         alt="Creolitos"
       />
     </div>

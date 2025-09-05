@@ -5,16 +5,19 @@ import BlogPreview from './ui/blog/blog-preview';
 import EventsPreview from './ui/events/event-preview';
 import Hero from './ui/hero/hero';
 import GalleryCarousel from './ui/gallery/carousel';
+import {WavyDivider, SlantedDivider, BlobDivider} from '@/app/ui/dividers';
 
 export default function Page() {
   return (
     <main className="flex flex-col min-h-screen">
       <Header />
       {/* HERO */}
-      <section id="hero" className="min-h-screen flex flex-col">
-<Hero />
+      <section id="hero" className="min-h-screen flex flex-col bg-creoCont-purple100">
+        <Hero />
       </section>
 
+      <BlobDivider color="fill-creoCont-purple100" flip={true}/>
+      
       {/* EVENTS PREVIEW */}
       <section id="events" className="py-20 max-w-4xl w-full px-6">
         <EventsPreview />
@@ -22,7 +25,6 @@ export default function Page() {
           View All Events →
         </a>
       </section>
-
       {/* GALLERY PREVIEW */}
       <section id="gallery" className="py-20 bg-gray-50 w-full px-6">
         <h2 className="text-2xl font-semibold mb-6">Gallery</h2>

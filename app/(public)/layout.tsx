@@ -1,4 +1,4 @@
-import Header from '@/app/ui/header/header';
+import Header from '@/app/ui/header/header-sm';
 import Footer from '@/app/ui/footer/footer';
 import { createClient } from '@/utils/supabase/supabaseServer';
 import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
