@@ -28,28 +28,20 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
-  // IMPORTANT: DO NOT REMOVE auth.getUser()
-
+  // Get user data and role information
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Get user role information from JWT token using the simplified utility
-  const { role: userRole } = await getUserRoleFromJWT(supabase);
-  
-  // Determine if the user has admin role - this check is done by the middleware
-  const hasAdminRole = userRole === 'admin';
+  // Get user role information from JWT token using the enhanced utility
+  const { role: userRole, isAdmin } = await getUserRoleFromJWT(supabase);
   
   // Check if this is the auth callback route with a 'next' parameter pointing to admin
   const isAuthCallback = request.nextUrl.pathname.startsWith('/auth/callback');
   const requestedAdminAfterLogin = isAuthCallback && request.nextUrl.searchParams.get('next')?.startsWith('/admin');
   
   // Redirect non-admin users after login to public home page
-  if (user && requestedAdminAfterLogin && !hasAdminRole) {
+  if (user && requestedAdminAfterLogin && !isAdmin) {
     console.error(`Access denied: User ${user.id} with role '${userRole}' attempted to access admin after login`);
     const url = request.nextUrl.clone()
     url.pathname = '/' // Redirect to home page
@@ -76,7 +68,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // Check for admin role if accessing admin routes
-  if (user && request.nextUrl.pathname.startsWith('/admin') && !hasAdminRole) {
+  if (user && request.nextUrl.pathname.startsWith('/admin') && !isAdmin) {
     // Log unauthorized access attempt with detailed information
     console.error(`Access denied: User ${user.id} with role '${userRole}' attempted to access admin route ${request.nextUrl.pathname}`);
     

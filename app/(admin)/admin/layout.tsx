@@ -4,7 +4,7 @@ import Link from 'next/link';
 import LogInButton from '@/app/ui/auth/signout-button';
 import { createClient } from '@/utils/supabase/supabaseServer';
 import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
-import CreolitosLogoSM from '@/app/ui/creolitos-logo-sm';
+import {CreolitosLogoSM} from '@/app/ui/creolitos-logo';
 
 // Layout component for admin pages with authentication
 export default async function AdminLayout({children}: {children: React.ReactNode}) {

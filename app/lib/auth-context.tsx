@@ -9,6 +9,7 @@ import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
 interface AuthContextType {
   user: User | null;
   userRole: string | null;
+  isAdmin: boolean;
   isLoading: boolean;
   checkAuth: () => Promise<void>;
 }
@@ -17,6 +18,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   userRole: null,
+  isAdmin: false,
   isLoading: true,
   checkAuth: async () => {},
 });
@@ -28,6 +30,7 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClient();
 
@@ -42,15 +45,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session) {
         setUser(session.user);
         
-        // Use the roleUtils utility to get user role from JWT
-        const { role } = await getUserRoleFromJWT(supabase);
+        // Use the enhanced roleUtils utility to get user role from JWT
+        const { role, isAdmin: hasAdminRole } = await getUserRoleFromJWT(supabase);
         setUserRole(role);
+        setIsAdmin(hasAdminRole);
       } else {
         setUser(null);
         setUserRole(null);
+        setIsAdmin(false);
       }
     } catch (error) {
       console.error('Error checking auth:', error);
+      setUser(null);
+      setUserRole(null);
+      setIsAdmin(false);
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +74,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (session) {
           setUser(session.user);
           
-          // Update role when auth state changes using roleUtils
-          const { role } = await getUserRoleFromJWT(supabase);
+          // Update role when auth state changes using enhanced roleUtils
+          const { role, isAdmin: hasAdminRole } = await getUserRoleFromJWT(supabase);
           setUserRole(role);
+          setIsAdmin(hasAdminRole);
         } else {
           setUser(null);
           setUserRole(null);
+          setIsAdmin(false);
         }
       }
     );
@@ -85,6 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = {
     user,
     userRole,
+    isAdmin,
     isLoading,
     checkAuth,
   };

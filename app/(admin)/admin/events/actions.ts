@@ -1,8 +1,7 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/supabaseServer';
+import { createClient, getAdminClient, createAuthenticatedClient } from '@/utils/supabase/supabaseServer';
 import { revalidatePath } from 'next/cache';
-import { Database } from '@/types/supabase';
 
 // Define UUID type alias to make our intention clear
 type UUID = string;
@@ -36,44 +35,9 @@ interface EventSeriesData {
 
 export async function createEvent(formData: EventSeriesData) {
   try {
-    // Create Supabase client
-    const supabase = await createClient();
-    
-    // Check if the user has admin privileges first
-    const { data } = await supabase.auth.getUser();
-    const user = data?.user;
-    if (!user) {
-      return { 
-        success: false, 
-        error: 'You must be logged in to create events' 
-      };
-    }
-
-    
-    // Explicitly treat user.id as UUID type
-    const userUUID: UUID = user.id;
-
-    // Debug: Log user ID to confirm we're using the correct one
-    console.log('Checking admin role for user ID:', userUUID);
-    
-    // Get user profile with role - now properly typed with UUID
-    const { data: userProfile, error: profileError } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', userUUID)
-      .single();
-    
-    // Debug profile query results
-    console.log('User profile query result:', userProfile, 'Error:', profileError);
-    
-    // Check if profile exists and has admin role
-    // Using toString and toLowerCase for more robust comparison
-    if (!userProfile || String(userProfile.role).toLowerCase() !== 'admin') {
-      return { 
-        success: false, 
-        error: `You do not have permission to create events. Admin role is required. Current role: ${userProfile?.role || 'unknown'}` 
-      };
-    }
+    // Use getAdminClient to ensure the user has admin privileges
+    // This will throw an error if the user is not an admin
+    const supabase = await getAdminClient();
     
     // Insert the event series into the database
     const { data: eventSeriesData, error: eventSeriesError } = await supabase
@@ -146,6 +110,12 @@ export async function createEvent(formData: EventSeriesData) {
     
     return { success: true };
   } catch (error) {
+    if (error instanceof Error && error.message === 'Unauthorized: Admin role required') {
+      return { 
+        success: false, 
+        error: 'You do not have permission to create events. Admin role is required.' 
+      };
+    }
     console.error('Error in createEvent server action:', error);
     return { success: false, error: 'Failed to create event' };
   }
@@ -153,19 +123,31 @@ export async function createEvent(formData: EventSeriesData) {
 
 export async function fetchEvents() {
   try {
-    const supabase = await createClient();
+    // Use createAuthenticatedClient to get role information along with client
+    const { client: supabase, isAdmin } = await createAuthenticatedClient();
     
-    // Fetch all event series
-    const { data: events, error } = await supabase
+    // For non-admin users, fetch only published events
+    let query = supabase
       .from('event_series')
       .select('*, event_occurrences(*)');
+    
+    // If not admin, add filters for public events only
+    if (!isAdmin) {
+      query = query.eq('is_published', true);
+    }
+    
+    const { data: events, error } = await query;
       
     if (error) {
       console.error('Error fetching events:', error);
       return { success: false, error: error.message };
     }
     
-    return { success: true, data: events };
+    return { 
+      success: true, 
+      data: events, 
+      isAdmin // Return admin status to the UI
+    };
   } catch (error) {
     console.error('Error in fetchEvents server action:', error);
     return { success: false, error: 'Failed to fetch events' };
