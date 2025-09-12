@@ -51,9 +51,10 @@ export default function LoginPage() {
           throw error;
         }
 
-        // Successful login, redirect to intended destination
-        router.push(redirectTo);
-        router.refresh();
+        // Use window.location for a more reliable redirect after authentication
+        // This ensures a full page reload with the new authentication state
+        window.location.href = redirectTo;
+        return; // Important: prevent the code below from executing
       } else if (mode === 'register') {
         // Sign up with email and password
         const { data, error } = await supabase.auth.signUp({

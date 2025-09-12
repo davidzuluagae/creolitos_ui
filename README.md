@@ -47,6 +47,76 @@ creolitos_ui/
 
 The application uses Supabase for authentication and role-based access control. Several client utilities are available for different use cases.
 
+### Authentication Flow
+
+### Sign Out Process
+
+The application implements a thorough sign out process that combines both server-side and client-side approaches:
+
+#### How Sign Out Works
+
+1. **Server-Side Session Termination**: 
+   - The `/auth/signout` endpoint is called to terminate the session server-side
+   - This endpoint cleans up HTTP-only cookies and server-side sessions
+   - It handles both API requests and direct navigation differently
+
+2. **Client-Side Cleanup**:
+   - The `supabase.auth.signOut()` method is called to clean up client-side state
+   - Local storage and memory state related to authentication is cleared
+
+3. **Redirection**:
+   - After signing out, users are redirected to the home page
+   - The application state is completely refreshed
+
+#### Request Headers for Server-Side Logout
+
+When calling the server-side logout endpoint, specific request headers are important:
+
+1. **`credentials: 'include'`**: 
+   - Ensures that cookies are sent with the request
+   - Required for proper session termination as auth cookies must be included
+
+2. **`redirect: 'manual'`**:
+   - Prevents automatic following of redirects by the fetch API
+   - Necessary because server-side redirects in API calls won't automatically navigate the page
+   - Allows client-side code to handle navigation after the server session is terminated
+
+3. **`Accept: 'application/json'`** (optional):
+   - Signals to the server that this is an API request rather than direct navigation
+   - Server can respond with JSON instead of attempting a redirect response
+
+The server-side logout endpoint (`/auth/signout`) checks the Accept header to determine how to respond:
+- For API requests: Returns a JSON success response
+- For direct navigation: Returns a redirect response to the home page
+
+#### Implementation Example
+
+```typescript
+const handleSignOut = async () => {
+  try {
+    // Call server-side signout endpoint
+    await fetch('/auth/signout', {
+      method: 'POST',
+      credentials: 'include',
+      redirect: 'manual',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    // Perform client-side cleanup
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    
+    // Navigate to home page
+    window.location.href = '/';
+  } catch (error) {
+    console.error('Error signing out:', error);
+    window.location.href = '/';
+  }
+};
+```
+
 ### Supabase Server Clients
 
 #### 1. Basic Client: `createClient()`

@@ -24,33 +24,27 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
     setIsLoading(true);
 
     try {
-      // Create Supabase client locally when needed
+      // Create Supabase client
       const supabase = createClient();
-
-      // Call the server-side signout endpoint
+      
+      // First attempt server-side signout
       const response = await fetch('/auth/signout', {
         method: 'POST',
         credentials: 'include', // Important for cookies
-        headers: {
-          'Content-Type': 'application/json',
-        }
+        // Don't follow redirects automatically
+        redirect: 'manual'
       });
 
-      if (!response.ok) {
-        throw new Error('Server-side sign out failed');
-      }
-
-      // Also sign out on the client side
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        throw error;
-      }
-
-      // After successful signout, refresh the router and redirect
-      router.refresh();
-      router.push('/');
+      // Server signout was successful, now perform client-side cleanup
+      await supabase.auth.signOut();
+      
+      // Navigate to home page - this is what actually causes the redirect to happen
+      // since we're ignoring the server's redirect
+      window.location.href = '/';
     } catch (error) {
       console.error('Error signing out:', error);
+      // Even if there's an error, try to get back to home page
+      window.location.href = '/';
     } finally {
       setIsLoading(false);
     }
