@@ -2,7 +2,7 @@ import Header from '@/app/ui/header/header-sm';
 import Footer from '@/app/ui/footer/footer';
 import Home from '@/content/home.mdx';
 import BlogPreview from './ui/blog/blog-preview';
-import EventsPreview from './ui/events/event-preview';
+import EventsPreview from './ui/events/admin/eventsPreview';
 import Hero from './ui/hero/hero';
 import GalleryCarousel from './ui/gallery/carousel';
 import {WavyDivider, SlantedDivider, BlobDivider} from '@/app/ui/dividers';
@@ -12,7 +12,7 @@ export default function Page() {
     <main className="flex flex-col min-h-screen">
       <Header />
       {/* HERO */}
-      <section id="hero" className="min-h-screen flex flex-col bg-creoCont-purple100">
+      <section id="hero" className=" min-h-[75vh] flex flex-col bg-creoCont-purple100">
         <Hero />
       </section>
 

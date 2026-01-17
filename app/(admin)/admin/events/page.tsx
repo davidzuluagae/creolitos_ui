@@ -29,10 +29,8 @@ export default function AdminEventsPage() {
     'Workshop',
     'Class',
     'Camp',
-    'Festival',
+    'storytime',
     'Concert',
-    'Seminar',
-    'Conference',
     'Cultural Event',
     'Language Exchange',
     'Family Event',
@@ -41,16 +39,10 @@ export default function AdminEventsPage() {
   const [categoryQuery, setCategoryQuery] = useState('');
 
   // Predefined event types
-  const eventTypes = [
+  const eventPresence = [
     'In-person',
     'Virtual',
     'Hybrid',
-    'Indoor',
-    'Outdoor',
-    'One-time',
-    'Weekly',
-    'Monthly',
-    'Annual'
   ];
   const [eventTypeQuery, setEventTypeQuery] = useState('');
 
@@ -65,8 +57,8 @@ export default function AdminEventsPage() {
   // Filtered event types based on search query
   const filteredEventTypes =
     eventTypeQuery === ''
-      ? eventTypes
-      : eventTypes.filter((type) =>
+      ? eventPresence
+      : eventPresence.filter((type) =>
         type.toLowerCase().includes(eventTypeQuery.toLowerCase())
       );
 
