@@ -20,7 +20,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={`${dynaPuff.className} antialiased text-creoLim-400`}>
+      <body className={`${dynaPuff.className} antialiased`}>
         <AuthProvider>
           {children}
         </AuthProvider>

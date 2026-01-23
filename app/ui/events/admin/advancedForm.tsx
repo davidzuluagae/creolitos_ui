@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Fragment } from 'react';
 import { CalendarIcon, ClockIcon, MapPinIcon, CurrencyDollarIcon, UserGroupIcon, TagIcon, ArrowPathIcon, CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline';
-import { createEvent, fetchEvents } from './actions';
+import { createEvent, fetchEvents } from 'app/(admin)/events/actions'; // TODO: Adjust the import path as necessary
 import { Switch, RadioGroup, Disclosure, Combobox, Transition } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { format } from 'date-fns';

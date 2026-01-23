@@ -65,7 +65,7 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
       <MenuItems
         transition
         anchor="bottom end"
-        className="w-52 absolute z-[9999] rounded-xl border border-creoSec-300 bg-creoCont-neutral1 shadow-lg transition duration-100 ease-out focus:outline-none data-closed:scale-95 data-closed:opacity-0">
+        className="w-52 absolute z-[9999] rounded-xl border border-creoSec-300 bg-creoSkin-400 shadow-lg transition duration-100 ease-out focus:outline-none data-closed:scale-95 data-closed:opacity-0">
         <MenuItem key={1} as="div" className="w-full">
           <Link
             href="/profile"

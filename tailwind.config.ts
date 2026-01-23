@@ -12,33 +12,13 @@ const config: Config = {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
       colors: {
-        // Creolitos Primary
-        // warm, inviting, and vibrant
-        // for buttons, highlights, and links.
-        creoPri: {
-          100: "#D69562",
-          200: "#CA7F56",
-        },
-
-        // Creolitos Secondary
-        // Supporting Colors 
-        // 100 and 200 light backgrounds: for sections, cards, hover, accents, subtle fills
-        // 300: for borders, emphasis, transitions
-        creoSec: {
-          100: "#DAB58D",
-          200: "#DDBB7C",
-          300: "#C5A877",
-        },
-
-        // Creolitos Limited use
-        // heavy earth tones. Use sparingly
-        // for text headers, footer backgrounds, or small accent icons
-        // 300 and 400 for contrast text or small UI details
-        creoLim: {
-          100: "#703E0E",
-          200: "#73572A", // subheading text
-          300: "#5A3A13",
-          400: "#453822", // main text
+        // Creolitos Skin tones
+        //Main skin colors from the logo
+        creoSkin: {
+          100: "#3E230E", // Main text
+          200: "#62462F", // subheading text
+          300: "#B57E59", // Highlights
+          400: "#E1D1BA", // lightest (for contrast with darks)
         },
 
         // Creolitos Contrast
@@ -47,11 +27,17 @@ const config: Config = {
         // neutral for backgrounds
         creoCont: {
           mint: "#A6E3B5",
-          yellow: "#FFD95E",
-          purple100: "#BFA2DB",
-          purple200: "#9B6BFF",
+          yellow: "#F9DC8A",
+          purple: "#BFA2DB",
+          pink: "#EA6AD2",
           neutral1: "#F9F9F9", // off-white
         },
+      },
+      textColor: {
+        DEFAULT: "#3E230E", // Set creoSkin-100 as the default text color
+      },
+      backgroundColor: {
+        DEFAULT: "#F9F9F9", // Set creoCont-neutral1 as the default background color
       },
     },
     keyframes: {
@@ -59,6 +45,17 @@ const config: Config = {
         '100%': {
           transform: 'translateX(100%)',
         },
+      },
+    },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem",   // 16px (mobile)
+        sm: "1.5rem",      // 24px
+        lg: "2rem",        // 32px
+      },
+      screens: {
+        xl: "1280px",
       },
     },
   },
