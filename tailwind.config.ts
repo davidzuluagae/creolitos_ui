@@ -26,6 +26,7 @@ const config: Config = {
         // purples for section dividers, subtle gradients.
         // neutral for backgrounds
         creoCont: {
+          blue: "#D4EDF4",
           mint: "#A6E3B5",
           yellow: "#F9DC8A",
           purple: "#BFA2DB",

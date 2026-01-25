@@ -14,7 +14,7 @@
   }
   
   mark {
-    @apply inline-block bg-transparent text-creoSkin-400 px-1 py-0.5 rounded-xl;
+    @apply inline-block bg-transparent text-creoSkin-300 px-1 py-0.5 rounded-xl;
   }
 }
 

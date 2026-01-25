@@ -1,13 +1,13 @@
 import Header from '@/app/ui/header/header-sm';
 import Footer from '@/app/ui/footer/footer';
-import WhatIs from '@/content/what_is.mdx';
+import Who from '@/content/who';
 import Offer from '@/content/offer.mdx';
 import How from '@/content/how.mdx';
 import BlogPreview from './ui/blog/blog-preview';
 import EventsPreview from './ui/events/admin/eventsPreview';
 import Hero from './ui/hero/hero';
 import GalleryCarousel from './ui/gallery/carousel';
-import {WavyDivider, BlobDivider, StickFigureDivider} from '@/app/ui/dividers';
+import {WavyDivider, BlobDivider} from '@/app/ui/dividers';
 
 export default function Page() {
   return (
@@ -18,25 +18,33 @@ export default function Page() {
         <Hero />
       </section>
 
-      <BlobDivider 
-        color="fill-creoCont-neutral1" 
-        colorBottom="fill-creoCont-pink" 
-      />
-
-      {/* what is */}
-      <section id="what_is" className="py-20 bg-creoCont-pink w-full px-6">
-        <div className="container prose prose-slate prose-headings:mt-8 prose-headings:font-semibold prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg">
-          <WhatIs />
+      {/* who we are */}
+      <section id="who_we_are" className="w-full bg-creoCont-neutral1">
+        <div id='Who_header' className='w-full bg-creoCont-pink'>
+          <h1 className="container text-5xl font-semibold text-creoSkin-100 pt-4">What is Creolitos</h1>
         </div>
+      <BlobDivider
+                colorBottom="fill-creoCont-pink"
+                color='fill-creoCont-neutral1'
+                flipped={true}
+              />
+          <Who />
       </section>
       
-      <WavyDivider 
-        color="fill-creoCont-pink" 
-        colorBottom="fill-creoCont-yellow" 
+      <BlobDivider 
+        color="fill-creoCont-neutral1" 
+        colorBottom="fill-creoCont-purple" 
       />
-
       {/* services */}
-      <section id="services" className="py-20 bg-creoCont-yellow w-full px-6">
+      <section id="services" className="w-full bg-creoCont-neutral1">
+        <div id='contact_header' className='w-full bg-creoCont-purple'>
+          <h1 className="container text-5xl font-semibold text-creoSkin-100 pt-4">What we offer</h1>
+        </div>
+      <BlobDivider
+                colorBottom="fill-creoCont-purple"
+                color='fill-creoCont-neutral1'
+                flipped={true}
+              />
         <div className="container prose prose-slate prose-headings:mt-8 prose-headings:font-semibold prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg">
           <Offer />
         </div>
@@ -44,39 +52,26 @@ export default function Page() {
       
       <BlobDivider 
         color="fill-creoCont-yellow" 
-        colorBottom="fill-creoCont-purple" 
+        colorBottom="fill-creoCont-neutral1" 
+        flipped={true}
       />
       
       {/* how */}
-      <section id="how" className="py-20 bg-creoCont-purple w-full px-6">
+      <section id="how" className="w-full bg-creoCont-neutral1">
+        <div id='contact_header' className='w-full bg-creoCont-yellow'>
+          <h1 className="container text-5xl font-semibold text-creoSkin-100 pt-4">How we Work</h1>
+        </div>
+      <BlobDivider
+                colorBottom="fill-creoCont-neutral1"
+                color='fill-creoCont-yellow'
+              />
         <div className="container prose prose-slate prose-headings:mt-8 prose-headings:font-semibold prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg">
           <How />
         </div>
       </section>
 
-      <StickFigureDivider/>
-      
-      {/* CONTACT */}
-      <section id="contact" className="py-20 bg-creoCont-mint w-full px-6">
-        <div className="container">
-        <h2 className="text-2xl font-semibold mb-6">Contact Us</h2>
-        <form className="flex gap-4 ">
-          <div className='flex flex-col'>
-          <input type="text" placeholder="Your Name" className="p-2 border rounded-lg" />
-          <input type="email" placeholder="Your Email" className="p-2 border rounded-lg" />
-          </div>
-          <div className='flex-4 flex-col'>
-          <textarea placeholder="Message" className="p-2 border rounded-lg" rows={4} />
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg">
-            Send
-          </button>
-          </div>
-        </form>
-        </div>
-      </section>
-
       {/* FOOTER */}
-      <section id="footer" className="flex-grow flex-col pt-8 flex items-center">
+      <section id="footer">
         <Footer />
       </section>
     </main>

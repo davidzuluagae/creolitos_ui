@@ -38,7 +38,7 @@ export default function RotatingWelcome() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.6 }}
-            className="text-5xl font-bold text-creoPri-200 z-10 relative"
+            className="text-5xl font-bold text-creoSkin-400 z-10 relative"
           >
             {words[index].text}
           </motion.h1>

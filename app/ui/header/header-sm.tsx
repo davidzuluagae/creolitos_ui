@@ -39,8 +39,8 @@ export default function Header() {
       >
         <div
           className={`flex items-center ${isScrolled
-              ? 'container justify-between'
-              : 'justify-center px-4'
+            ? 'container justify-between'
+            : 'justify-center px-4'
             }`}
         >
           <div
@@ -52,7 +52,7 @@ export default function Header() {
           <NavLinks />
         </div>
       </div>
-    
+
     </div>
   );
 }
