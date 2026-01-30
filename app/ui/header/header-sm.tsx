@@ -41,7 +41,7 @@ export default function Header() {
           )}
         </Link>
 
-        <NavLinks className={isScrolled ? 'text-creoSkin-300' : 'text-creoSkin-400'}/>
+        <NavLinks className={isScrolled ? 'text-creoSkin-100' : 'text-creoSkin-400'}/>
       </div>
     </header>
   );
