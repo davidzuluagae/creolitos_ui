@@ -1,6 +1,6 @@
 'use client';
 import '@/app/ui/global.css';
-import { dynaPuff } from '@/app/ui/fonts';
+import { montserrat } from '@/app/ui/fonts';
 import { AuthProvider } from '@/app/lib/auth-context';
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={`${dynaPuff.className} antialiased`}>
+      <body className={`${montserrat.className} antialiased`}>
         <AuthProvider>
           {children}
         </AuthProvider>

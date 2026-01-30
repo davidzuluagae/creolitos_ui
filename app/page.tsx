@@ -11,8 +11,13 @@ import {WavyDivider, BlobDivider} from '@/app/ui/dividers';
 
 export default function Page() {
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen bg-creoCont-neutral1 text-creoSkin-100">
       <Header />
+      {/* <BlobDivider
+                colorBottom="fill-none"
+                color='fill-creoCont-neutral1'
+                flipped={true}
+              /> */}
       {/* HERO */}
       <section id="hero" className=" min-h-[75vh] flex flex-col bg-creoCont-neutral1">
         <Hero />

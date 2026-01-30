@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/supabaseClient';
 import { User } from '@supabase/supabase-js';
 import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
+import { usePathname } from 'next/navigation';
 
 // Define the shape of your auth context
 interface AuthContextType {
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClient();
+  const pathname = usePathname();
 
   // Function to check authentication status
   const checkAuth = async () => {
@@ -66,31 +68,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Check auth status when the component mounts
   useEffect(() => {
-    checkAuth();
-    
-    // Set up a listener for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session) {
-          setUser(session.user);
-          
-          // Update role when auth state changes using enhanced roleUtils
-          const { role, isAdmin: hasAdminRole } = await getUserRoleFromJWT(supabase);
-          setUserRole(role);
-          setIsAdmin(hasAdminRole);
-        } else {
-          setUser(null);
-          setUserRole(null);
-          setIsAdmin(false);
+    if (pathname.startsWith('/admin')) {
+      checkAuth();
+      
+      // Set up a listener for auth state changes
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          if (session) {
+            setUser(session.user);
+            
+            // Update role when auth state changes using enhanced roleUtils
+            const { role, isAdmin: hasAdminRole } = await getUserRoleFromJWT(supabase);
+            setUserRole(role);
+            setIsAdmin(hasAdminRole);
+          } else {
+            setUser(null);
+            setUserRole(null);
+            setIsAdmin(false);
+          }
         }
-      }
-    );
-    
-    // Clean up the subscription
-    return () => {
-      subscription?.unsubscribe();
-    };
-  }, [supabase]);
+      );
+      
+      // Clean up the subscription
+      return () => {
+        subscription?.unsubscribe();
+      };
+    } else {
+      setIsLoading(false);
+      setUser(null);
+      setUserRole(null);
+      setIsAdmin(false);
+    }
+  }, [supabase, pathname]);
 
   const value = {
     user,

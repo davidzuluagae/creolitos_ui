@@ -47,6 +47,89 @@ creolitos_ui/
 
 The application uses Supabase for authentication and role-based access control. Several client utilities are available for different use cases.
 
+### Disabling/Enabling Public Authentication
+
+Authentication for public-facing pages can be temporarily disabled for development or testing purposes. Here’s how to toggle it on and off.
+
+#### To Disable Public Authentication (Current State)
+
+1.  **`middleware.ts`**: The matcher is restricted to admin routes.
+2.  **`app/lib/auth-context.tsx`**: The `AuthProvider` does not perform auth checks on public routes.
+3.  **`app/(public)/layout.tsx`**: Server-side user fetching is commented out.
+
+#### To Re-enable Public Authentication
+
+1.  **Update `middleware.ts`**:
+    Restore the original `matcher` to include public routes. This ensures the session is updated for all users.
+
+    ```typescript
+    // middleware.ts
+    export const config = {
+      matcher: [
+        // Protected routes that require authentication
+        '/admin/:path*',
+        '/dashboard/:path*',
+        
+        // Public routes that still need session handling but don't require auth
+        '/(main|login|auth)/:path*',
+        
+        // Match root path
+        '/',
+        
+        // Exclude static files and images
+        '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+      ],
+    }
+    ```
+
+2.  **Update `app/lib/auth-context.tsx`**:
+    Remove the conditional logic in `useEffect` within `AuthProvider` to allow auth checks on all pages.
+
+    ```typescript
+    // app/lib/auth-context.tsx
+    // ... imports
+    export function AuthProvider({ children }: { children: React.ReactNode }) {
+      // ... state variables
+    
+      // ... checkAuth function
+    
+      useEffect(() => {
+        checkAuth();
+        
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            // ... same logic
+          }
+        );
+        
+        return () => {
+          subscription?.unsubscribe();
+        };
+      }, [supabase]);
+    
+      // ... rest of the component
+    }
+    ```
+
+3.  **Update `app/(public)/layout.tsx`**:
+    Uncomment the server-side user fetching to enable server components on public pages to be aware of the user's authentication state.
+
+    ```typescript
+    // app/(public)/layout.tsx
+    import { createClient } from '@/utils/supabase/supabaseServer';
+    import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
+
+    export default async function Layout({ children }: { children: React.ReactNode }) {
+      const supabase = await createClient();
+      const { data: user } = await supabase.auth.getUser()
+      let role = null;
+      if (user) {
+        role = await getUserRoleFromJWT(supabase);
+      }
+      // ... rest of the component
+    }
+    ```
+
 ### Authentication Flow
 
 ### Sign Out Process

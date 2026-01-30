@@ -3,7 +3,7 @@ import {SolidWavyDivider} from '@/app/ui/dividers';
 
 export default function Hero() {
   return (
-<section className="relative w-full min-h-[78vh] md:min-h-[7/8-screen] overflow-hidden">
+<section className="relative w-full min-h-[100vh] md:min-h-[7/8-screen] overflow-hidden">
 <video
       className="absolute inset-0 w-full h-full object-cover object-top"
       autoPlay
@@ -15,7 +15,7 @@ export default function Hero() {
     >
       {/* Landscape */}
       <source
-        src="/hero-landscape1.webm"
+        src="/hero-landscape.webm"
         type="video/webm"
         media="(orientation: landscape)"
       />
@@ -49,7 +49,7 @@ export default function Hero() {
   </div>
 
       {/* <!-- Content --> */}
-      <div className="relative z-10 h-full flex items-center ">
+      <div className="relative top-32 z-10 h-full flex items-center ">
         <div className="container mx-auto px-6">
           <RotatingWelcome />
 
