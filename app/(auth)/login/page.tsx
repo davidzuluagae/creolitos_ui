@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { createClient } from '@/utils/supabase/supabaseClient';
+import { createAuthService } from '@/app/lib/services/auth/supabase-auth';
 import Link from 'next/link';
 import Image from 'next/image';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
@@ -20,19 +20,26 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirectTo') || '/admin';
-  const supabase = createClient();
+  const [authService, setAuthService] = useState<ReturnType<typeof createAuthService> | null>(null);
 
   // Check if user is already logged in
   useEffect(() => {
+    setAuthService(createAuthService());
+  }, []);
+
+  useEffect(() => {
+    if (!authService) {
+      return;
+    }
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session } } = await authService.getSession();
       if (session) {
         router.push(redirectTo);
       }
     };
 
     checkSession();
-  }, [supabase, router, redirectTo]);
+  }, [authService, router, redirectTo]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,12 +48,12 @@ export default function LoginPage() {
     setMessage(null);
 
     try {
+      if (!authService) {
+        throw new Error('Supabase client is not available yet.');
+      }
       if (mode === 'login') {
         // Sign in with email and password
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+        const { data, error } = await authService.signInWithPassword(email, password);
 
         if (error) {
           throw error;
@@ -58,13 +65,11 @@ export default function LoginPage() {
         return; // Important: prevent the code below from executing
       } else if (mode === 'register') {
         // Sign up with email and password
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await authService.signUp(
           email,
           password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
-          },
-        });
+          `${window.location.origin}/auth/callback`
+        );
 
         if (error) {
           throw error;
@@ -74,9 +79,10 @@ export default function LoginPage() {
         setMode('login');
       } else if (mode === 'forgot') {
         // Password reset request
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
-        });
+        const { error } = await authService.resetPasswordForEmail(
+          email,
+          `${window.location.origin}/auth/callback?next=/reset-password`
+        );
 
         if (error) {
           throw error;

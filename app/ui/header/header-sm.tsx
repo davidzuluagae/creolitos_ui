@@ -35,7 +35,7 @@ export default function Header() {
       >
         <Link href="/" className="flex items-center">
           {isScrolled ? (
-            <CreolitosLogoSM className="h-10 w-auto" />
+            <CreolitosLogoSM className="h-14 w-auto" />
           ) : (
             <CreolitosLogo className="h-28 w-auto" />
           )}

@@ -34,7 +34,6 @@ export default async function AdminLayout({children}: {children: React.ReactNode
           <div className="flex items-center space-x-4">
             <nav className="flex space-x-8 text-xl text-white">
               <Link href="/admin" className="hover:underline">Dashboard</Link>
-              <Link href="/admin/events" className="hover:underline">Events</Link>
               <Link href="/" className="hover:underline">View Site</Link>
             </nav>
           </div>

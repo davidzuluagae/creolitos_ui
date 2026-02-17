@@ -2,6 +2,23 @@
 
 Built with Next.js, TypeScript, and Supabase.
 
+## Supabase Toggle (Temporary)
+
+To temporarily disable Supabase at runtime (useful for local UI work), set:
+
+```
+NEXT_PUBLIC_SUPABASE_DISABLED=true
+```
+
+This bypasses the auth provider and prevents the browser Supabase client from being created.
+
+To re-enable, remove the variable or set it to `false`, and ensure:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
+
 ## Project Structure
 
 ```
@@ -56,6 +73,7 @@ Authentication for public-facing pages can be temporarily disabled for developme
 1.  **`middleware.ts`**: The matcher is restricted to admin routes.
 2.  **`app/lib/auth-context.tsx`**: The `AuthProvider` does not perform auth checks on public routes.
 3.  **`app/(public)/layout.tsx`**: Server-side user fetching is commented out.
+4.  **Environment**: `NEXT_PUBLIC_SUPABASE_DISABLED=true` will bypass the auth provider entirely.
 
 #### To Re-enable Public Authentication
 
@@ -129,6 +147,36 @@ Authentication for public-facing pages can be temporarily disabled for developme
       // ... rest of the component
     }
     ```
+
+4. **Environment**:
+    Ensure `NEXT_PUBLIC_SUPABASE_DISABLED` is unset or `false`, and that `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set.
+
+### Supabase Use Outside Admin
+
+Supabase is also used for public-facing features:
+
+- **Contact form** (`app/ui/contact/actions.tsx`) uses the **service role key** on the server to insert into `contact_messages`.
+- **Auth routes** (`app/(auth)/*`) are public and rely on Supabase for login/reset flows.
+
+If you want a full public-facing Supabase shutdown, add a guard in the contact action and auth routes, not just the auth provider.
+
+## Events Migration (Eventbrite)
+
+The current app includes a custom events flow (admin CRUD + public events page). If you want to swap to Eventbrite:
+
+1. **Disable the custom UI**:
+   - Admin: `app/(admin)/admin/page.tsx` and `app/(admin)/admin/layout.tsx` remove/disable links to `/admin/events`.
+   - Public: `app/(public)/events/page.tsx` can show a migration notice.
+
+2. **Disable the admin events screen**:
+   - `app/(admin)/admin/events/page.tsx` should return a simple “Events Disabled” notice.
+
+3. **Wire up Eventbrite**:
+   - Replace the public events page with Eventbrite embeds or links.
+   - Add a CTA link in the footer or nav to your Eventbrite page.
+
+4. **(Optional) Remove custom events actions**:
+   - If you fully migrate, remove or guard `app/(admin)/admin/events/actions.ts` to avoid unused Supabase calls.
 
 ### Authentication Flow
 

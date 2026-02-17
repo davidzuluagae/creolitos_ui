@@ -80,7 +80,6 @@ export default function Footer() {
                     <nav className="flex flex-col space-y-2">
                         <Link href="/" className="hover:underline">Home</Link>
                         <Link href="/blog" className="hover:underline">Blog</Link>
-                        <Link href="/events" className="hover:underline">Events</Link>
                         <Link href="/gallery" className="hover:underline">Gallery</Link>
                         <Link href="/contact" className="hover:underline">Contact</Link>
                     </nav>

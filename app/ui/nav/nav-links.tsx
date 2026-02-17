@@ -26,9 +26,9 @@ export const navLinks: NavLink[] = [
     href: '',
   },
   {
-    name: 'Who We Are',
-    description: 'Return to the homepage',
-    href: '#who_we_are',
+    name: 'About',
+    description: 'Our Purpose, Our People',
+    href: '#about',
   },
   {
     name: 'Services',

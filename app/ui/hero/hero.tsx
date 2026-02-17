@@ -11,29 +11,29 @@ export default function Hero() {
       loop
       playsInline
       preload="auto"
-      poster="/images/hero-poster.jpg"
+      poster="/hero-poster.jpg"
     >
       {/* Landscape */}
-      <source
-        src="/hero-landscape.webm"
-        type="video/webm"
-        media="(orientation: landscape)"
-      />
       <source
         src="/hero-landscape.mp4"
         type="video/mp4"
         media="(orientation: landscape)"
         />
+      <source
+        src="/hero-landscape.webm"
+        type="video/webm"
+        media="(orientation: landscape)"
+      />
 
       {/* Portrait */}
       <source
-        src="/hero-portrait.webm"
-        type="video/webm"
+        src="/hero-portrait.mp4"
+        type="video/mp4"
         media="(orientation: portrait)"
       />
       <source
-        src="/hero-portrait.mp4"
-        type="video/mp4"
+        src="/hero-portrait.webm"
+        type="video/webm"
         media="(orientation: portrait)"
       />
     </video>

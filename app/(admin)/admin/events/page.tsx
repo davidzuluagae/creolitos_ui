@@ -8,6 +8,15 @@ import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { format } from 'date-fns';
 
 export default function AdminEventsPage() {
+  return (
+    <div className="max-w-3xl mx-auto px-6 py-16 text-center">
+      <h1 className="text-3xl font-bold mb-4">Events Disabled</h1>
+      <p className="text-gray-600">
+        Event management is temporarily disabled while we migrate to Eventbrite.
+      </p>
+    </div>
+  );
+
   // Event Series fields
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

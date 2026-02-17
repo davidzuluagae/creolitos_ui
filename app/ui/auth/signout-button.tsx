@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import NavButton from '../nav/nav-button';
-import { createClient } from '@/utils/supabase/supabaseClient';
+import { createAuthService } from '@/app/lib/services/auth/supabase-auth';
 import { UserIcon } from '@heroicons/react/24/outline';
 import { User } from '@supabase/supabase-js';
 import { Menu, MenuButton, MenuItem, MenuItems, Button } from '@headlessui/react';
@@ -25,7 +25,10 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
 
     try {
       // Create Supabase client
-      const supabase = createClient();
+      const authService = createAuthService();
+      if (!authService) {
+        throw new Error('Auth service is not available yet.');
+      }
       
       // First attempt server-side signout
       const response = await fetch('/auth/signout', {
@@ -36,7 +39,7 @@ export default function LogInButton({ user, userRole }: LogInButtonProps) {
       });
 
       // Server signout was successful, now perform client-side cleanup
-      await supabase.auth.signOut();
+      await authService.signOut();
       
       // Navigate to home page - this is what actually causes the redirect to happen
       // since we're ignoring the server's redirect

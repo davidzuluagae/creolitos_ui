@@ -11,22 +11,22 @@ export default function AdminPage() {
       </h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Event Management Card */}
-        <Link 
-          href="/admin/events"
-          className="block bg-creoCont-bright1 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+        {/* Event Management Card (Disabled) */}
+        <div
+          className="block bg-creoCont-bright1/60 rounded-lg shadow-md overflow-hidden opacity-60 cursor-not-allowed"
+          aria-disabled="true"
         >
           <div className="p-6 flex flex-col h-full">
             <h2 className="text-xl font-semibold text-creoPri-200 mb-2">Event Management</h2>
-            <p className=" mb-4">Create, edit, and manage events</p>
+            <p className=" mb-4">Disabled (migrating to Eventbrite)</p>
             <div className="mt-auto">
               <span className="inline-flex items-center text-sm font-medium text-creoLim-100">
-                Manage events
+                Events disabled
                 <ArrowPathIcon className="ml-2 h-4 w-4" />
               </span>
             </div>
           </div>
-        </Link>
+        </div>
         
         {/* Blog Management Card */}
         <Link 

@@ -1,53 +1,44 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import clsx from 'clsx';
+import logo from '@/public/creolitos_logo.png';
 
 export interface CreolitosLogoProps {
   className?: string;
   showSubtitle?: boolean;
-  height?: number;
 }
 
 export function CreolitosLogo({ 
   className, 
-  showSubtitle, 
-  height = 100 
+  showSubtitle 
 }: CreolitosLogoProps) {
-  const aspectRatio = 2.56;
-  const width = height * aspectRatio;
-
   return (
-    <div className={showSubtitle? "flex flex-col align-middle p-0":""}>
+    <div className={clsx(showSubtitle && "flex flex-col items-center p-0")}>
       <Image 
-        src="/creolitos_logo.png" 
-        width={width} 
-        height={height} 
-        className={className}
+        src={logo} 
+        className={clsx("h-24 w-auto", className)}
         alt="Creolitos"
       />
-      {showSubtitle && <h1 className='text-center text-lg py-2'>Multicultural & Multilingual Education</h1>}
+      {showSubtitle && (
+        <h1 className="text-center text-lg py-2">
+          Multicultural & Multilingual Education
+        </h1>
+      )}
     </div>
   );
 }
 
 export interface CreolitosLogoSmProps {
   className?: string;
-  height?: number;
 }
 
 export function CreolitosLogoSM({ 
-  className, 
-  height = 50 
+  className 
 }: CreolitosLogoSmProps) {
-  const aspectRatio = 1;
-  const width = height * aspectRatio;
-
   return (
     <div className="flex flex-col align-middle p-0">
-      <Image 
-        src="/creolitos_sm.png" 
-        width={width} 
-        height={height} 
-        className={className || "hidden md:block relative z-20"}
+      <img
+        src="/creolitos_sm.svg"
+        className={clsx("hidden md:block h-12 w-auto", className)}
         alt="Creolitos"
       />
     </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import { createBrowserClient } from '@supabase/ssr'
 import { Database } from '@/types/supabase'
 import { getUserRoleFromJWT } from './roleUtils'
@@ -6,6 +8,12 @@ import { getUserRoleFromJWT } from './roleUtils'
  * Creates a standard Supabase client for browser client components
  */
 export function createClient() {
+  if (process.env.NEXT_PUBLIC_SUPABASE_DISABLED === 'true') {
+    return null;
+  }
+  if (typeof window === 'undefined') {
+    return null;
+  }
   return createBrowserClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -38,6 +46,9 @@ export function createClient() {
  */
 export async function createAuthenticatedClient() {
   const supabase = createClient();
+  if (!supabase) {
+    return { client: null, role: 'none', isAdmin: false };
+  }
   
   try {
     // Get current session and role information

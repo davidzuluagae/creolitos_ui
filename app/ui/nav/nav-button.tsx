@@ -2,8 +2,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LinkIcon } from '@heroicons/react/24/outline';
-import { Button } from '@headlessui/react'
 
 
 interface NavButtonProps {
@@ -15,7 +13,6 @@ interface NavButtonProps {
 
 export default function NavButton({ name, href, icon: Icon }: NavButtonProps) {
   const pathname = usePathname();
-  console.log('Current pathname:', pathname);
   const renderIcon = Icon && <Icon
     className={clsx(
       "w-5 h-5 transition-colors",

@@ -1,9 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { createClient } from '@/utils/supabase/supabaseClient';
 import { User } from '@supabase/supabase-js';
-import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
+import { createAuthService } from '@/app/lib/services/auth/supabase-auth';
 import { usePathname } from 'next/navigation';
 
 // Define the shape of your auth context
@@ -29,26 +28,36 @@ export const useAuth = () => useContext(AuthContext);
 
 // The provider component that wraps your app
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  if (process.env.NEXT_PUBLIC_SUPABASE_DISABLED === 'true') {
+    return <>{children}</>;
+  }
   const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient();
+  const [authService, setAuthService] = useState<ReturnType<typeof createAuthService> | null>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setAuthService(createAuthService());
+  }, []);
 
   // Function to check authentication status
   const checkAuth = async () => {
+    if (!authService) {
+      return;
+    }
     setIsLoading(true);
     try {
       // Get the current session
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session } } = await authService.getSession();
       
       // Set user if session exists
       if (session) {
         setUser(session.user);
         
         // Use the enhanced roleUtils utility to get user role from JWT
-        const { role, isAdmin: hasAdminRole } = await getUserRoleFromJWT(supabase);
+        const { role, isAdmin: hasAdminRole } = await authService.getUserRole();
         setUserRole(role);
         setIsAdmin(hasAdminRole);
       } else {
@@ -68,17 +77,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Check auth status when the component mounts
   useEffect(() => {
+    if (!authService) {
+      return;
+    }
     if (pathname.startsWith('/admin')) {
       checkAuth();
       
       // Set up a listener for auth state changes
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      const { data: { subscription } } = authService.onAuthStateChange(
         async (event, session) => {
           if (session) {
             setUser(session.user);
             
             // Update role when auth state changes using enhanced roleUtils
-            const { role, isAdmin: hasAdminRole } = await getUserRoleFromJWT(supabase);
+            const { role, isAdmin: hasAdminRole } = await authService.getUserRole();
             setUserRole(role);
             setIsAdmin(hasAdminRole);
           } else {
@@ -99,7 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUserRole(null);
       setIsAdmin(false);
     }
-  }, [supabase, pathname]);
+  }, [authService, pathname]);
 
   const value = {
     user,
