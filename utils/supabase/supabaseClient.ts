@@ -1,8 +1,8 @@
 'use client';
 
-import { createBrowserClient } from '@supabase/ssr'
-import { Database } from '@/types/supabase'
-import { getUserRoleFromJWT } from './roleUtils'
+import { createClient as createSupabaseClient, type SupabaseClient } from '@supabase/supabase-js';
+import { Database } from '@/types/supabase';
+import { getUserRoleFromJWT } from './roleUtils';
 
 /**
  * Creates a standard Supabase client for browser client components
@@ -14,12 +14,12 @@ export function createClient() {
   if (typeof window === 'undefined') {
     return null;
   }
-  return createBrowserClient<Database>(
+  return createSupabaseClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       global: {
-        fetch: (url, options) => {
+        fetch: (url: RequestInfo | URL, options?: RequestInit) => {
           if (process.env.NODE_ENV !== 'production') {
             // Log the complete URL and request details in development
             console.log('🔍 Supabase Browser Request:', {
@@ -35,9 +35,14 @@ export function createClient() {
           
           return fetch(url, options);
         }
-      }
+      },
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true,
+      },
     }
-  )
+  );
 }
 
 /**
