@@ -30,12 +30,12 @@ export default function Header() {
           container mx-auto
           flex items-center justify-between
           transition-all duration-300
-          ${isScrolled ? 'h-16 px-4' : 'h-36 px-6'}
+          ${isScrolled ? 'h-28 px-4' : 'h-36 px-6'}
         `}
       >
         <Link href="/" className="flex items-center">
           {isScrolled ? (
-            <CreolitosLogoSM className="h-14 w-auto" />
+            <CreolitosLogoSM className="h-20 w-auto" />
           ) : (
             <CreolitosLogo className="h-28 w-auto" />
           )}

@@ -62,7 +62,7 @@ export default function Social({ platform, username, size = 24, className = "" }
             href={getUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center gap-2 text-creoSkin-100 hover:text-creoSkin-300 transition-colors ${className}`}
+            className={`flex items-center gap-2 text-creoSkin-300 hover:text-creoSkin-200 transition-colors ${className}`}
             aria-label={`Visit Creolitos on ${platform}`}
         >
             {renderIcon()}

@@ -303,13 +303,13 @@ export default function AdminEventsPage() {
 
   return (
     <div className="w-full max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8 text-center">
+      <h1 className="font-bold mb-8 text-center">
         Event Management
       </h1>
 
       {/* Event Creation Form */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-10">
-        <h2 className="text-xl font-semibold mb-4">Create New Event</h2>
+        <h2 className="font-semibold mb-4">Create New Event</h2>
 
         {message.text && (
           <div

@@ -22,8 +22,8 @@ type StickDividerProps = {
  * Wavy Divider
  */
 export const WavyDivider: React.FC<DividerProps> = ({
-  color = "fill-[#9B6BFF]",
-  colorBottom = "fill-white",
+  color,
+  colorBottom,
   className,
   transparent,
   flipped = false,
@@ -44,7 +44,7 @@ export const WavyDivider: React.FC<DividerProps> = ({
       <path
         d="M0,0 L1200,0 L1200,60 C1200,0 1050,120 900,60 C750,0 600,120 450,60 C300,0 150,120 0,60 Z"
         className={clsx(
-          transparent === "top" || transparent === "both"
+          transparent === "top" || transparent === "both" || !color
             ? "fill-transparent"
             : color
         )}
@@ -52,7 +52,7 @@ export const WavyDivider: React.FC<DividerProps> = ({
       <path
         d="M0,60 C150,120 300,0 450,60 C600,120 750,0 900,60 C1050,120 1200,0 1200,60 L1200,120 L0,120 Z"
         className={clsx(
-          transparent === "bottom" || transparent === "both"
+          transparent === "bottom" || transparent === "both" || !colorBottom
             ? "fill-transparent"
             : colorBottom
         )}

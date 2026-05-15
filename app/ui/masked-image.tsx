@@ -1,44 +1,65 @@
-import { useId } from "react";
-import clsx from "clsx";
+'use client'
 
-export interface MaskedImageProps {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-  className?: string;
+import Image from 'next/image'
+import clsx from 'clsx'
+
+type MaskedImageProps = {
+  src: string
+  alt: string
+  className?: string
+  mask?: 'blob-1' | 'blob-2' | 'blob-3'
+  rotation?: 'left' | 'right' | 'none'
+  priority?: boolean
 }
 
-export function MaskedImage({
+export default function MaskedImage({
   src,
   alt,
-  width = 320,
-  height = 320,
   className,
+  mask = 'blob-1',
+  rotation = 'none',
+  priority = false,
 }: MaskedImageProps) {
-  const clipId = useId();
+  const maskStyle = {
+    WebkitMaskImage: `url('/masks/${mask}.svg')`,
+    maskImage: `url('/masks/${mask}.svg')`,
+    WebkitMaskRepeat: 'no-repeat' as const,
+    maskRepeat: 'no-repeat' as const,
+    WebkitMaskPosition: 'center' as const,
+    maskPosition: 'center' as const,
+    WebkitMaskSize: 'contain' as const,
+    maskSize: 'contain' as const,
+  }
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 320 320"
-      className={clsx("block", className)}
-      role="img"
-      aria-label={alt}
+    <div
+      className={clsx(
+        'relative',
+        rotation === 'left' && '-rotate-2',
+        rotation === 'right' && 'rotate-2',
+        className
+      )}
     >
-      <defs>
-        <clipPath id={clipId}>
-          <path d="M160 18 C222 8 304 64 302 152 C300 250 224 304 150 302 C72 300 18 242 18 160 C18 76 84 30 160 18 Z" />
-        </clipPath>
-      </defs>
-      <image
-        href={src}
-        width="320"
-        height="320"
-        clipPath={`url(#${clipId})`}
-        preserveAspectRatio="xMidYMid slice"
-      />
-    </svg>
-  );
+      <div
+        className="relative aspect-square w-full overflow-hidden"
+        style={maskStyle}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority={priority}
+          className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            ...maskStyle,
+            boxShadow: 'inset 0 0 0 2px rgba(62, 35, 14, 0.18)',
+          }}
+        />
+      </div>
+    </div>
+  )
 }

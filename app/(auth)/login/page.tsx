@@ -163,7 +163,7 @@ export default function LoginPage() {
           <Tab.Panels className="mt-4">
             <Tab.Panel>
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Sign in to your account</h2>
+                <h2 className="font-bold text-gray-900">Sign in to your account</h2>
                 <p className="mt-2 text-sm text-gray-600">
                   Enter your credentials to access your account
                 </p>
@@ -251,7 +251,7 @@ export default function LoginPage() {
 
             <Tab.Panel>
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Create a new account</h2>
+                <h2 className="font-bold text-gray-900">Create a new account</h2>
                 <p className="mt-2 text-sm text-gray-600">
                   Fill out the form below to create your account
                 </p>
@@ -339,7 +339,7 @@ export default function LoginPage() {
 
             <Tab.Panel>
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Reset your password</h2>
+                <h2 className="font-bold text-gray-900">Reset your password</h2>
                 <p className="mt-2 text-sm text-gray-600">
                   Enter your email to receive reset instructions
                 </p>

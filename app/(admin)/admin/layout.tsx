@@ -27,7 +27,7 @@ export default async function AdminLayout({children}: {children: React.ReactNode
         <Link href="/">
           <CreolitosLogoSM />
         </Link>
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="font-bold text-white">
             Creolitos Admin
             </h1>
            </div> 

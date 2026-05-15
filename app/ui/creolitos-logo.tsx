@@ -19,7 +19,7 @@ export function CreolitosLogo({
         alt="Creolitos"
       />
       {showSubtitle && (
-        <h1 className="text-center text-lg py-2">
+        <h1 className="text-center py-2">
           Multicultural & Multilingual Education
         </h1>
       )}

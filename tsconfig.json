@@ -38,7 +38,7 @@
     "scripts/seed.js",
     "mdx-components.js",
     ".next/dev/types/**/*.ts"
-  ],
+, "content/storytime.mdx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function EventsPreview() {
     return (
         <>
-            <h2 className="text-2xl font-semibold mb-6">Upcoming Events</h2><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <h2 className="font-semibold mb-6">Upcoming Events</h2><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {mockEvents.map(event => (
                     <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                         <div className="p-6">
@@ -14,7 +14,7 @@ export default function EventsPreview() {
                                 {formatDateToLocal(event.date)}
                             </div>
 
-                            <h2 className="text-xl font-bold mb-2">
+                            <h2 className="font-bold mb-2">
                                 {event.title}
                             </h2>
 

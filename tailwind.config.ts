@@ -9,6 +9,24 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      typography: ({ theme }: { theme: (path: string) => string }) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.creoSkin.100'),
+            '--tw-prose-body': theme('colors.creoSkin.100'),
+            '--tw-prose-headings': theme('colors.creoSkin.100'),
+            '--tw-prose-bold': theme('colors.creoSkin.100'),
+            '--tw-prose-counters': theme('colors.creoSkin.200'),
+            '--tw-prose-bullets': theme('colors.creoSkin.200'),
+            '--tw-prose-hr': theme('colors.creoSkin.200'),
+            '--tw-prose-quotes': theme('colors.creoSkin.100'),
+            '--tw-prose-quote-borders': theme('colors.creoSkin.200'),
+            '--tw-prose-captions': theme('colors.creoSkin.200'),
+            '--tw-prose-th-borders': theme('colors.creoSkin.200'),
+            '--tw-prose-td-borders': theme('colors.creoSkin.200'),
+          },
+        },
+      }),
       fontFamily: {
         dynapuff: ['DynaPuff', 'sans-serif'],
       },
@@ -30,11 +48,26 @@ const config: Config = {
         // purples for section dividers, subtle gradients.
         // neutral for backgrounds
         creoCont: {
-          blue: "#D4EDF4",
-          mint: "#A6E3B5",
-          yellow: "#F9DC8A",
-          purple: "#BFA2DB",
-          pink: "#EA6AD2",
+          blue: {
+            DEFAULT: "#D4EDF4",
+            soft: "#F1FAFC",
+          },
+          mint: {
+            DEFAULT: "#A6E3B5",
+            soft: "#EEF9F1",
+          },
+          yellow: {
+            DEFAULT: "#F9DC8A",
+            soft: "#FEF8E7",
+          },
+          purple: {
+            DEFAULT: "#BFA2DB",
+            soft: "#F3EDF9",
+          },
+          pink: {
+            DEFAULT: "#EA6AD2",
+            soft: "#FDEAF8",
+          },
           neutral1: "#F9F9F9", // off-white
         },
       },

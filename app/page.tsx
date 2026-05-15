@@ -1,35 +1,35 @@
 import Header from '@/app/ui/header/header-sm';
 import Footer from '@/app/ui/footer/footer';
 import About from '@/content/about';
-import Offer from '@/content/offer.mdx';
-import How from '@/content/how.mdx';
-import BlogPreview from './ui/blog/blog-preview';
+import ServicesFamilies from '@/content/services_families';
 import Hero from './ui/hero/hero';
-import GalleryCarousel from './ui/gallery/carousel';
 import { WavyDivider, BlobDivider } from '@/app/ui/dividers';
+import Social from './ui/footer/social';
+import ServicesInstitutions from '@/content/services_institutions';
+import Methodology from '@/content/methodology';
+import MaskedImage from './ui/masked-image';
+
 
 export default function Page() {
+  const facebookUser = 'creolitos';
+  const instagramUser = 'creolitos';
+  const youtubeUser = '@creolitos_EDU';
+  const socialIconClass = 'transition-transform hover:scale-110';
+
   return (
-    <main className="flex flex-col min-h-screen bg-creoCont-neutral1 text-creoSkin-100">
+    <main className="flex min-h-screen flex-col bg-creoCont-neutral1 text-creoSkin-100">
       <Header />
-      {/* <BlobDivider
-                colorBottom="fill-none"
-                color='fill-creoCont-neutral1'
-                flipped={true}
-              /> */}
-      {/* HERO */}
-      <section id="hero" className=" min-h-[75vh] flex flex-col bg-creoCont-neutral1">
+      <section id="hero" className="flex min-h-[75vh] flex-col bg-creoCont-neutral1">
         <Hero />
       </section>
 
-      {/* about */}
-      <section id="about" className="w-full bg-creoCont-neutral1">
-        <div id='about_header' className='w-full bg-creoCont-pink'>
-          <h1 className="container text-5xl font-semibold text-creoSkin-100 pt-4">Our Purpose, Our People</h1>
+      <section id="about" className="scroll-mt-28 w-full bg-creoCont-neutral1">
+        <div id="about_header" className="w-full bg-creoCont-pink">
+          <h1 className="container text-creoSkin-100 pt-4">Our Purpose, Our People</h1>
         </div>
         <BlobDivider
           colorBottom="fill-creoCont-pink"
-          color='fill-creoCont-neutral1'
+          color="fill-creoCont-neutral1"
           flipped={true}
         />
         <About />
@@ -39,18 +39,18 @@ export default function Page() {
         color="fill-creoCont-neutral1"
         colorBottom="fill-creoCont-purple"
       />
-      {/* services */}
-      <section id="services" className="w-full bg-creoCont-neutral1">
-        <div id='contact_header' className='w-full bg-creoCont-purple'>
-          <h1 className="container text-5xl font-semibold text-creoSkin-100 pt-4">What we offer</h1>
+      <section id="services" className="scroll-mt-28 w-full bg-creoCont-neutral1">
+        <div id="services_header" className="w-full bg-creoCont-purple">
+          <h1 className="container text-creoSkin-100 pt-4">Our Educational Experiences</h1>
         </div>
         <BlobDivider
           colorBottom="fill-creoCont-purple"
-          color='fill-creoCont-neutral1'
+          color="fill-creoCont-neutral1"
           flipped={true}
         />
-        <div className="container prose prose-slate prose-headings:mt-8 prose-headings:font-semibold prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg">
-          <Offer />
+        <div className="container w-full">
+          <ServicesFamilies />
+          <ServicesInstitutions />
         </div>
       </section>
 
@@ -60,49 +60,80 @@ export default function Page() {
         flipped={true}
       />
 
-      {/* how */}
-      <section id="how" className="w-full bg-creoCont-neutral1">
-        <div id='contact_header' className='w-full bg-creoCont-yellow'>
-          <h1 className="container text-5xl font-semibold text-creoSkin-100 pt-4">How we Work</h1>
+      <section id="how" className="scroll-mt-28 w-full bg-creoCont-neutral1">
+        <div id="how_header" className="w-full bg-creoCont-yellow">
+          <h1 className="container text-creoSkin-100 pt-4">The Creolitos Approach</h1>
         </div>
         <BlobDivider
           colorBottom="fill-creoCont-neutral1"
-          color='fill-creoCont-yellow'
+          color="fill-creoCont-yellow"
         />
-        <div className="container prose prose-slate prose-headings:mt-8 prose-headings:font-semibold prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg">
-          <How />
+        <div className="container">
+          <Methodology />
         </div>
       </section>
 
-      {/* FOOTER */}
+      <BlobDivider
+        color="fill-creoCont-mint"
+        colorBottom="fill-creoCont-neutral1"
+        flipped={true}
+      />
+
+      <section id="contact" className="relative w-full scroll-mt-28 bg-creoCont-mint">
+        <div className="relative z-10">
+          <div id="contact_header" className="w-full bg-creoCont-mint">
+            <h1 className="container text-creoSkin-100 pt-4">Contact Us</h1>
+          </div>
+          <div className="container flex flex-col items-center gap-8 p-6 lg:flex-row lg:justify-evenly">
+            <div className="flex w-full max-w-md flex-col justify-evenly gap-4 px-6 text-center lg:grow-[2]">
+              <form className="flex flex-col gap-4">
+                <input type="text" placeholder="Your Name" className="rounded-xl border-4 border-creoCont-pink bg-creoCont-pink-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300" />
+                <input type="email" placeholder="Your Email" className="rounded-xl border-4 border-creoCont-yellow bg-creoCont-yellow-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300" />
+                <textarea placeholder="Message" className="rounded-xl border-4 border-creoCont-purple bg-creoCont-purple-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300" rows={4} />
+                <button type="submit" className="rounded-xl bg-creoSkin-300 px-4 py-3 font-semibold text-creoSkin-400 transition-colors hover:text-creoSkin-100">
+                  Send
+                </button>
+              </form>
+              <div id="follow_us" className="my-2 flex flex-col items-center">
+                <h3 className="my-2 flex font-bold">Follow Us</h3>
+                <div className="flex flex-row gap-10">
+                  <Social
+                    platform="facebook"
+                    username={facebookUser}
+                    className={socialIconClass}
+                    size={50}
+                  />
+                  <Social
+                    platform="instagram"
+                    username={instagramUser}
+                    className={socialIconClass}
+                    size={50}
+                  />
+                  <Social
+                    platform="youtube"
+                    username={youtubeUser}
+                    className={socialIconClass}
+                    size={50}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mx-auto w-full max-w-md lg:max-w-xl lg:flex-none">
+              <MaskedImage
+                className="w-full"
+                src="/contact_enh_img.jpg"
+                mask="blob-2"
+                alt="Contact Ms. Maria"
+              />
+            </div>
+          </div>
+          <WavyDivider colorBottom="fill-creoCont-blue" />
+        </div>
+      </section>
+
       <section id="footer">
         <Footer />
       </section>
     </main>
   );
 }
-
-{/* EVENTS PREVIEW */ }
-{/* <section id="events" className="py-20 max-w-4xl w-full px-6">
-        <EventsPreview />
-        <a href="/events" className="block mt-6 text-blue-500 hover:underline">
-          View All Events →
-        </a>
-      </section> */}
-
-{/* GALLERY PREVIEW */ }
-{/* <section id="gallery" className="py-20 bg-gray-50 w-full px-6">
-        <h2 className="text-2xl font-semibold mb-6">Gallery</h2>
-        <GalleryCarousel />
-        <a href="/gallery" className="block mt-6 text-blue-500 hover:underline">
-          See Full Gallery →
-        </a>
-      </section> */}
-
-{/* BLOG PREVIEW */ }
-{/* <section id="blog" className="py-20 max-w-4xl w-full px-6">
-        <BlogPreview />
-        <a href="/blog" className="block mt-6 text-blue-500 hover:underline">
-          Read More Posts →
-        </a>
-      </section> */}

@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 export default function AdminEventsPage() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16 text-center">
-      <h1 className="text-3xl font-bold mb-4">Events Disabled</h1>
+      <h1 className="font-bold mb-4">Events Disabled</h1>
       <p className="text-gray-600">
         Event management is temporarily disabled while we migrate to Eventbrite.
       </p>
@@ -312,13 +312,13 @@ export default function AdminEventsPage() {
 
   return (
     <div className="w-full max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8 text-center">
+      <h1 className="font-bold mb-8 text-center">
         Event Management
       </h1>
 
       {/* Event Creation Form */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-10">
-        <h2 className="text-xl font-semibold mb-4">Create New Event</h2>
+        <h2 className="font-semibold mb-4">Create New Event</h2>
 
         {message.text && (
           <div
@@ -377,7 +377,7 @@ export default function AdminEventsPage() {
 
           {/* Common Fields - Always visible */}
           <div className="border-b pb-6">
-            <h3 className="text-lg font-medium mb-4">
+            <h3 className="font-medium mb-4">
               {isRecurring ? 'Event Series Details' : 'Event Details'}
             </h3>
 
@@ -831,7 +831,7 @@ export default function AdminEventsPage() {
 
       {/* Events List */}
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Upcoming Events</h2>
+        <h2 className="font-semibold mb-4">Upcoming Events</h2>
 
         {events.length === 0 ? (
           <p className="text-gray-500 italic">No events found. Create your first event above!</p>

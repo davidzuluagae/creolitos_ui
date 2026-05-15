@@ -2,10 +2,8 @@
 
 import {
   CalendarIcon,
-  HomeIcon,
   PhotoIcon,
   MicrophoneIcon,
-  InboxIcon,
 } from '@heroicons/react/24/outline';
 import NavButton from './nav-button';
 
@@ -14,6 +12,7 @@ export type NavLink = {
   name: string;
   href: string;
   icon?: React.ComponentType<{ className?: string }>;
+  color?: string;
   description?: string;
   disabled?: boolean;
 };
@@ -29,16 +28,19 @@ export const navLinks: NavLink[] = [
     name: 'About',
     description: 'Our Purpose, Our People',
     href: '#about',
+    color: 'pink',
   },
   {
     name: 'Services',
-    description: 'Return to the homepage',
+    description: 'Explore our educational experiences',
     href: '#services',
+    color: 'purple'
   },
   {
-    name: 'How we do it',
-    description: 'Return to the homepage',
+    name: 'Methodology',
+    description: 'Learn about the Creolitos approach',
     href: '#how',
+    color: 'yellow',
   },
   {
     name: 'Events',
@@ -65,6 +67,7 @@ export const navLinks: NavLink[] = [
     name: 'Contact',
     description: 'Get in touch with us',
     href: '#contact',
+    color: 'mint',
   },
 ];
 
@@ -76,13 +79,14 @@ export default function NavLinks({ className }: NavLinksProps) {
   return (
     <div className={`flex flex-row items-center justify-center ${className}`}>
       {navLinks
-        .filter(({ disabled }) => { return disabled === null || !disabled })
-        .map(({ name, icon, href }) => (
+        .filter(({ disabled }) => !disabled)
+        .map(({ name, icon, href, color }) => (
           <NavButton
             key={name}
             name={name}
             href={href}
             icon={icon}
+            bgColor={color}
           />
         ))}
     </div>

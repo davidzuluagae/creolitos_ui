@@ -60,9 +60,9 @@ type ThemeKey = keyof typeof colorThemes
 
 const colorList: ThemeKey[] = [
   'creoCont-pink',
-  'creoCont-purple',
   'creoCont-mint',
   'creoCont-yellow',
+  'creoCont-purple',
   'creoCont-blue',
 ]
 

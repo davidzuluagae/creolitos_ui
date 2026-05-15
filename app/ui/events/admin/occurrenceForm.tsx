@@ -124,7 +124,7 @@ export default function AdminEventsPage() {
     return (
         <div className="w-full max-w-5xl mx-auto p-6">
             <div className="bg-white p-6 rounded-lg shadow-md mb-10">
-                <h2 className="text-xl font-semibold mb-4">Create New Event</h2>
+                <h2 className="font-semibold mb-4">Create New Event</h2>
                 {message.text && (
                     <div
                         className={`p-4 mb-4 rounded-md ${
@@ -227,7 +227,7 @@ export default function AdminEventsPage() {
                         </div>
                     </RadioGroup>
                     <div className="border-b pb-6">
-                        <h3 className="text-lg font-medium mb-4">
+                        <h3 className="font-medium mb-4">
                             {isRecurring
                                 ? 'Event Series Details'
                                 : 'Event Details'}

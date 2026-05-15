@@ -52,54 +52,50 @@ export default function ContactForm() {
           {submitStatus.message}
         </div>
       )}
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium mb-1">
-            Name
-          </label>
+                    {/* <form className="flex flex-col gap-4"> */}
+                <input type="text" placeholder="Your Name" className="p-2 border-4 rounded-lg border-creoCont-pink text-creoSkin-100 placeholder-creoSkin-300" />
+                <input type="email" placeholder="Your Email" className="p-2 border-4 rounded-lg border-creoCont-yellow text-creoSkin-100 placeholder-creoSkin-300" />
+                <textarea placeholder="Message" className="p-2 rounded-lg border-4 border-creoCont-purple text-creoSkin-100 placeholder-creoSkin-300" rows={4} />
+                <button type="submit" className="px-4 py-2 bg-creoSkin-300 text-creoSkin-400 hover:text-creoSkin-100 rounded-lg font-semibold">
+                  Send
+                </button>
+              {/* </form> */}
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
           <input
             id="name"
             type="text"
+            placeholder="Your Name" 
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="p-2 border-4 rounded-lg border-creoCont-pink text-creoSkin-100 placeholder-creoSkin-300"
           />
-        </div>
         
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1">
-            Email
-          </label>
           <input
             id="email"
+            placeholder="Your Email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="p-2 border-4 rounded-lg border-creoCont-yellow text-creoSkin-100 placeholder-creoSkin-300" 
           />
-        </div>
-        
-        <div>
-          <label htmlFor="message" className="block text-sm font-medium mb-1">
-            Message
-          </label>
           <textarea
             id="message"
             rows={5}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Message"
+            className="p-2 rounded-lg border-4 border-creoCont-purple text-creoSkin-100 placeholder-creoSkin-300"
           />
-        </div>
         
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+          className={`px-4 py-2 bg-creoSkin-300 text-creoSkin-400 hover:text-creoSkin-100 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-creoCont-purple ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>
