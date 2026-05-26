@@ -7,6 +7,7 @@ export default function ContactForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [company, setCompany] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<{
     success?: boolean;
@@ -19,7 +20,7 @@ export default function ContactForm() {
     setSubmitStatus({})
 
     try {
-      const result = await submitContactForm({ name, email, message })
+      const result = await submitContactForm({ name, email, message, company })
       
       if (result.error) {
         throw new Error(result.error)
@@ -27,18 +28,18 @@ export default function ContactForm() {
 
       setSubmitStatus({
         success: true,
-        message: 'Thank you! Your message has been sent successfully.'
+        message: `Thanks for reaching out. We've received your message and will get back to you soon. Your request ID is ${result.requestId || 'CR-UNKNOWN'}.`
       })
       
-      // Reset form
       setName('')
       setEmail('')
       setMessage('')
+      setCompany('')
     } catch (error) {
       console.error('Error submitting form:', error)
       setSubmitStatus({
         success: false,
-        message: 'There was an error sending your message. Please try again.'
+        message: 'We could not send your message right now. Please try again in a moment or email info@creolitos.com directly.'
       })
     } finally {
       setIsSubmitting(false)
@@ -48,54 +49,57 @@ export default function ContactForm() {
   return (
     <>
       {submitStatus.message && (
-        <div className={`p-4 mb-6 rounded-md ${submitStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+        <div
+          className={`mb-6 rounded-md p-4 ${submitStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+          role="status"
+          aria-live="polite"
+        >
           {submitStatus.message}
         </div>
       )}
-                    {/* <form className="flex flex-col gap-4"> */}
-                <input type="text" placeholder="Your Name" className="p-2 border-4 rounded-lg border-creoCont-pink text-creoSkin-100 placeholder-creoSkin-300" />
-                <input type="email" placeholder="Your Email" className="p-2 border-4 rounded-lg border-creoCont-yellow text-creoSkin-100 placeholder-creoSkin-300" />
-                <textarea placeholder="Message" className="p-2 rounded-lg border-4 border-creoCont-purple text-creoSkin-100 placeholder-creoSkin-300" rows={4} />
-                <button type="submit" className="px-4 py-2 bg-creoSkin-300 text-creoSkin-400 hover:text-creoSkin-100 rounded-lg font-semibold">
-                  Send
-                </button>
-              {/* </form> */}
-
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
+        <input
+          id="name"
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="rounded-xl border-4 border-creoCont-pink bg-creoCont-pink-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300"
+        />
+        <input
+          id="email"
+          placeholder="Your Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="rounded-xl border-4 border-creoCont-yellow bg-creoCont-yellow-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300"
+        />
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="company">Company</label>
           <input
-            id="name"
+            id="company"
             type="text"
-            placeholder="Your Name" 
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="p-2 border-4 rounded-lg border-creoCont-pink text-creoSkin-100 placeholder-creoSkin-300"
+            tabIndex={-1}
+            autoComplete="off"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
           />
-        
-          <input
-            id="email"
-            placeholder="Your Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="p-2 border-4 rounded-lg border-creoCont-yellow text-creoSkin-100 placeholder-creoSkin-300" 
-          />
-          <textarea
-            id="message"
-            rows={5}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-            placeholder="Message"
-            className="p-2 rounded-lg border-4 border-creoCont-purple text-creoSkin-100 placeholder-creoSkin-300"
-          />
-        
+        </div>
+        <textarea
+          id="message"
+          rows={5}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+          placeholder="Message"
+          className="rounded-xl border-4 border-creoCont-purple bg-creoCont-purple-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300"
+        />
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`px-4 py-2 bg-creoSkin-300 text-creoSkin-400 hover:text-creoSkin-100 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-creoCont-purple ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+          className={`rounded-xl bg-creoSkin-300 px-4 py-3 font-semibold text-creoSkin-400 transition-colors hover:text-creoSkin-100 focus:outline-none focus:ring-2 focus:ring-creoCont-purple focus:ring-offset-2 ${isSubmitting ? 'cursor-not-allowed opacity-70' : ''}`}
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>

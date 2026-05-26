@@ -8,6 +8,7 @@ import Social from './ui/footer/social';
 import ServicesInstitutions from '@/content/services_institutions';
 import Methodology from '@/content/methodology';
 import MaskedImage from './ui/masked-image';
+import ContactForm from './ui/contact/contact-form';
 
 
 export default function Page() {
@@ -86,14 +87,7 @@ export default function Page() {
           </div>
           <div className="container flex flex-col items-center gap-8 p-6 lg:flex-row lg:justify-evenly">
             <div className="flex w-full max-w-md flex-col justify-evenly gap-4 px-6 text-center lg:grow-[2]">
-              <form className="flex flex-col gap-4">
-                <input type="text" placeholder="Your Name" className="rounded-xl border-4 border-creoCont-pink bg-creoCont-pink-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300" />
-                <input type="email" placeholder="Your Email" className="rounded-xl border-4 border-creoCont-yellow bg-creoCont-yellow-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300" />
-                <textarea placeholder="Message" className="rounded-xl border-4 border-creoCont-purple bg-creoCont-purple-soft px-4 py-3 text-creoSkin-100 placeholder-creoSkin-300" rows={4} />
-                <button type="submit" className="rounded-xl bg-creoSkin-300 px-4 py-3 font-semibold text-creoSkin-400 transition-colors hover:text-creoSkin-100">
-                  Send
-                </button>
-              </form>
+              <ContactForm />
               <div id="follow_us" className="my-2 flex flex-col items-center">
                 <h3 className="my-2 flex font-bold">Follow Us</h3>
                 <div className="flex flex-row gap-10">
