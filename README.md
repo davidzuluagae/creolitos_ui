@@ -2,19 +2,23 @@
 
 Built with Next.js, TypeScript, and Supabase.
 
-## Supabase Toggle (Temporary)
+## Admin Access Toggle
 
-To temporarily disable Supabase at runtime (useful for local UI work), set:
+Admin routes are currently protected by temporary HTTP Basic Auth in `proxy.ts`, not by Supabase sessions. This keeps the admin area private without reactivating the full auth stack.
 
+To enable admin access locally or in production, set:
+
+```env
+ADMIN_BASIC_AUTH_USER=your_username
+ADMIN_BASIC_AUTH_PASSWORD=your_strong_password
 ```
-NEXT_PUBLIC_SUPABASE_DISABLED=true
-```
 
-This bypasses the auth provider and prevents the browser Supabase client from being created.
+To disable admin access again, remove those variables. The proxy returns `404` when the admin credentials are missing, which keeps the admin routes hidden.
 
-To re-enable, remove the variable or set it to `false`, and ensure:
+If you want to re-enable the original Supabase-based admin auth later, restore the Supabase checks in `proxy.ts` and `app/(admin)/admin/layout.tsx`, then remove the `ADMIN_BASIC_AUTH_*` variables and set:
 
-```
+```env
+NEXT_PUBLIC_SUPABASE_DISABLED=false
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 ```
@@ -64,101 +68,20 @@ creolitos_ui/
 
 The application uses Supabase for authentication and role-based access control. Several client utilities are available for different use cases.
 
-### Disabling/Enabling Public Authentication
+### Public Authentication
 
-Authentication for public-facing pages can be temporarily disabled for development or testing purposes. Here’s how to toggle it on and off.
+Public auth is still available through Supabase for login, sign-up, and password reset flows. If you disable it for local work, `NEXT_PUBLIC_SUPABASE_DISABLED=true` bypasses the browser auth provider.
 
-#### To Disable Public Authentication (Current State)
-
-1.  **`middleware.ts`**: The matcher is restricted to admin routes.
-2.  **`app/lib/auth-context.tsx`**: The `AuthProvider` does not perform auth checks on public routes.
-3.  **`app/(public)/layout.tsx`**: Server-side user fetching is commented out.
-4.  **Environment**: `NEXT_PUBLIC_SUPABASE_DISABLED=true` will bypass the auth provider entirely.
-
-#### To Re-enable Public Authentication
-
-1.  **Update `middleware.ts`**:
-    Restore the original `matcher` to include public routes. This ensures the session is updated for all users.
-
-    ```typescript
-    // middleware.ts
-    export const config = {
-      matcher: [
-        // Protected routes that require authentication
-        '/admin/:path*',
-        '/dashboard/:path*',
-        
-        // Public routes that still need session handling but don't require auth
-        '/(main|login|auth)/:path*',
-        
-        // Match root path
-        '/',
-        
-        // Exclude static files and images
-        '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-      ],
-    }
-    ```
-
-2.  **Update `app/lib/auth-context.tsx`**:
-    Remove the conditional logic in `useEffect` within `AuthProvider` to allow auth checks on all pages.
-
-    ```typescript
-    // app/lib/auth-context.tsx
-    // ... imports
-    export function AuthProvider({ children }: { children: React.ReactNode }) {
-      // ... state variables
-    
-      // ... checkAuth function
-    
-      useEffect(() => {
-        checkAuth();
-        
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-          async (event, session) => {
-            // ... same logic
-          }
-        );
-        
-        return () => {
-          subscription?.unsubscribe();
-        };
-      }, [supabase]);
-    
-      // ... rest of the component
-    }
-    ```
-
-3.  **Update `app/(public)/layout.tsx`**:
-    Uncomment the server-side user fetching to enable server components on public pages to be aware of the user's authentication state.
-
-    ```typescript
-    // app/(public)/layout.tsx
-    import { createClient } from '@/utils/supabase/supabaseServer';
-    import { getUserRoleFromJWT } from '@/utils/supabase/roleUtils';
-
-    export default async function Layout({ children }: { children: React.ReactNode }) {
-      const supabase = await createClient();
-      const { data: user } = await supabase.auth.getUser()
-      let role = null;
-      if (user) {
-        role = await getUserRoleFromJWT(supabase);
-      }
-      // ... rest of the component
-    }
-    ```
-
-4. **Environment**:
-    Ensure `NEXT_PUBLIC_SUPABASE_DISABLED` is unset or `false`, and that `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set.
+To turn public auth fully back on, unset `NEXT_PUBLIC_SUPABASE_DISABLED` and make sure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are present. The login page and callback routes will continue to work once those env vars are restored.
 
 ### Supabase Use Outside Admin
 
-Supabase is also used for public-facing features:
+Supabase is still used for public-facing features:
 
 - **Contact form** (`app/ui/contact/actions.tsx`) uses the **service role key** on the server to insert into `contact_messages`.
-- **Auth routes** (`app/(auth)/*`) are public and rely on Supabase for login/reset flows.
+- **Auth routes** (`app/(auth)/*`) still rely on Supabase for login/reset flows.
 
-If you want a full public-facing Supabase shutdown, add a guard in the contact action and auth routes, not just the auth provider.
+If you want a full public-facing Supabase shutdown, add guards in the contact action and auth routes, not just the browser auth provider.
 
 ## Events Migration (Eventbrite)
 
@@ -475,7 +398,7 @@ export default function AdminActions() {
 
 ## Role-Based Access Control
 
-The application uses a JWT claim called `user_role` to determine user permissions. This claim is checked by the middleware and various utility functions to provide appropriate access control.
+The application uses a JWT claim called `user_role` to determine user permissions. When the Supabase-backed admin flow is enabled again, that claim is checked by the proxy and various utility functions to provide appropriate access control.
 
 ## Development
 
