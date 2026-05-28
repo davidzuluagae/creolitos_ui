@@ -133,7 +133,7 @@ export async function fetchEvents() {
     
     // If not admin, add filters for public events only
     if (!isAdmin) {
-      query = query.eq('is_published', true);
+      query = query.eq('status', 'published');
     }
     
     const { data: events, error } = await query;
