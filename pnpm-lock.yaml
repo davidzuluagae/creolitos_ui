@@ -59,11 +59,8 @@ importers:
       lodash:
         specifier: ^4.17.23
         version: 4.17.23
-      middleware:
-        specifier: link:@/utils/supabase/middleware
-        version: link:@/utils/supabase/middleware
       next:
-        specifier: latest
+        specifier: 16.1.6
         version: 16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-auth:
         specifier: 4.24.13
@@ -84,10 +81,10 @@ importers:
         specifier: ^3.4.8
         version: 3.4.8
       react:
-        specifier: latest
+        specifier: 19.2.4
         version: 19.2.4
       react-dom:
-        specifier: latest
+        specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
       react-icons:
         specifier: ^5.5.0

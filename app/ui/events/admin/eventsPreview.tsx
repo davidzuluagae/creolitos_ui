@@ -1,7 +1,16 @@
-
-import { mockEvents } from '@/app/(public)/events/page';
 import { formatDateToLocal } from '@/app/lib/utils';
 import Link from 'next/link';
+
+const mockEvents = [
+    {
+        id: 'eventbrite',
+        date: new Date().toISOString(),
+        title: 'Upcoming Events Are Moving',
+        description: 'We are migrating event management to Eventbrite. Please check back soon for upcoming event listings.',
+        location: 'Online',
+        price: 0,
+    },
+] as const;
 
 export default function EventsPreview() {
     return (
@@ -35,7 +44,7 @@ export default function EventsPreview() {
                                 </div>
 
                                 <Link
-                                    href={`/events/${event.id}`}
+                                    href="/events"
                                     className="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
                                 >
                                     Learn More

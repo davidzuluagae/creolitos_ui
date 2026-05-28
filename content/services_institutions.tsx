@@ -1,6 +1,13 @@
 import MaskedImage from '@/app/ui/masked-image'
 
-const programFormats = [
+type ProgramFormat = {
+  title: string
+  description: string
+  accent: string
+  wash: string
+}
+
+const programFormats: ProgramFormat[] = [
   {
     title: 'In-School Residencies',
     description: 'Short-term immersive experiences inspired by the Summer Reading Fiesta model.',
@@ -25,7 +32,7 @@ const programFormats = [
     accent: 'bg-creoCont-purple',
     wash: 'bg-creoCont-purple-soft',
   },
-] as const
+]
 
 function ProgramFormatCard({
   title,

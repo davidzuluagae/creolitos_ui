@@ -2,13 +2,21 @@
 
 import { useState } from 'react'
 
+type MethodologyPillar = {
+  title: string
+  description: string
+  chipColor: string
+  borderColor: string
+  bgColor: string
+}
+
 const challengePoints = [
   'Engagement is inconsistent.',
   'Heritage language is often lost over time.',
   'Instruction can lack cultural depth and real connection.',
 ]
 
-const methodologyPillars = [
+const methodologyPillars: MethodologyPillar[] = [
   {
     title: 'Storytelling',
     description: 'Language grows through narrative, rhythm, repetition, and emotional connection.',
@@ -30,7 +38,7 @@ const methodologyPillars = [
     borderColor: 'border-creoCont-purple',
     bgColor: 'bg-creoCont-purple',
   },
-] as const
+]
 
 const outcomes = [
   {
