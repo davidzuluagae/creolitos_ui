@@ -10,6 +10,7 @@ type MaskedImageProps = {
   mask?: 'blob-1' | 'blob-2' | 'blob-3'
   rotation?: 'left' | 'right' | 'none'
   priority?: boolean
+  sizes?: string
 }
 
 export default function MaskedImage({
@@ -19,6 +20,7 @@ export default function MaskedImage({
   mask = 'blob-1',
   rotation = 'none',
   priority = false,
+  sizes = '100vw',
 }: MaskedImageProps) {
   const maskStyle = {
     WebkitMaskImage: `url('/masks/${mask}.svg')`,
@@ -49,6 +51,7 @@ export default function MaskedImage({
           alt={alt}
           fill
           priority={priority}
+          sizes={sizes}
           className="object-cover"
         />
         <div

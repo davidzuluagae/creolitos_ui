@@ -22,6 +22,7 @@ export default function About() {
                             src="/IMG_14882.jpeg"
                             alt="Ms. María"
                             mask="blob-3"
+                            sizes="384px"
                         />
                         </div>
                         <figcaption className="m-0 text-left leading-tight">

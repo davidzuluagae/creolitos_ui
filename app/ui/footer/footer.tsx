@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { ChevronUpIcon } from '@heroicons/react/24/solid';
 
 export default function Footer() {
@@ -22,12 +21,10 @@ export default function Footer() {
 
             <div className="container flex flex-col items-center gap-6 text-center md:flex-row md:items-stretch md:justify-between md:text-left">
                 <div className="flex flex-col items-center gap-4 md:flex-row md:items-center">
-                    <Image
-                        src="/creolitos_sm.png"
+                    <img
+                        src="/creolitos_sm.svg"
                         alt="Creolitos Logo"
-                        width={100}
-                        height={100}
-                        className="rounded-md object-contain"
+                        className="h-[100px] w-[100px] rounded-md object-contain"
                     />
                     <div className="flex flex-col justify-center">
                         <p className="mb-2 text-2xl font-bold md:text-3xl">Creolitos ltd.™</p>

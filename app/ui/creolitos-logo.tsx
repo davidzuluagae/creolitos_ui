@@ -17,6 +17,8 @@ export function CreolitosLogo({
         src={logo} 
         className={clsx("h-24 w-auto", className)}
         alt="Creolitos"
+        priority
+        sizes="(max-width: 768px) 160px, 192px"
       />
       {showSubtitle && (
         <h1 className="text-center py-2">

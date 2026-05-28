@@ -118,6 +118,7 @@ export default function Page() {
                 src="/contact_enh_img.jpg"
                 mask="blob-2"
                 alt="Contact Ms. Maria"
+                sizes="(max-width: 1024px) 100vw, 576px"
               />
             </div>
           </div>

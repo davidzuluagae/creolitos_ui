@@ -80,6 +80,7 @@ export default function ServicesInstitutions() {
             rotation="right"
             className="w-full"
             priority
+            sizes="(max-width: 1024px) 100vw, 384px"
           />
         </div>
       </div>

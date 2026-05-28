@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createAuthService } from '@/app/lib/services/auth/supabase-auth';
 import Link from 'next/link';
-import Image from 'next/image';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Tab } from '@headlessui/react';
 
@@ -91,12 +90,10 @@ export default function LoginClient({ redirectTo }: { redirectTo: string }) {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="absolute top-0 left-0 m-8">
         <Link href="/" className="flex items-center space-x-2">
-          <Image
-            src="/creolitos_sm.png"
+          <img
+            src="/creolitos_sm.svg"
             alt="Creolitos"
-            width={50}
-            height={50}
-            className="rounded-md"
+            className="h-[50px] w-[50px] rounded-md"
           />
           <span className="text-xl font-bold text-amber-800">Creolitos</span>
         </Link>

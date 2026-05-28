@@ -8,15 +8,21 @@ import { getUserRoleFromJWT } from './roleUtils';
  * Creates a standard Supabase client for browser client components
  */
 export function createClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
   if (process.env.NEXT_PUBLIC_SUPABASE_DISABLED === 'true') {
+    return null;
+  }
+  if (!supabaseUrl || !supabaseAnonKey) {
     return null;
   }
   if (typeof window === 'undefined') {
     return null;
   }
   return createSupabaseClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       global: {
         fetch: (url: RequestInfo | URL, options?: RequestInit) => {
