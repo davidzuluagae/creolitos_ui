@@ -11,6 +11,8 @@ interface NavButtonProps {
   href: string;
   icon?: React.ComponentType<{ className?: string }>;
   bgColor?: string;
+  mobile?: boolean;
+  onClick?: () => void;
 }
 
 const hoverBgColors: Record<string, string> = {
@@ -21,7 +23,7 @@ const hoverBgColors: Record<string, string> = {
   blue: 'hover:bg-creoCont-blue',
 }
 
-export default function NavButton({ name, href, icon: Icon, bgColor }: NavButtonProps) {
+export default function NavButton({ name, href, icon: Icon, bgColor, mobile, onClick }: NavButtonProps) {
   const pathname = usePathname();
   const hoverBgClass = bgColor ? hoverBgColors[bgColor] : 'hover:bg-creoSkin-300';
   const renderIcon = Icon && <Icon
@@ -33,17 +35,21 @@ export default function NavButton({ name, href, icon: Icon, bgColor }: NavButton
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={clsx(
-        "flex items-center gap-2 hover:rounded-2xl px-4 py-2 text-xl font-medium transition-all duration-200",
+        "flex items-center gap-2 rounded-2xl transition-all duration-200",
+        mobile
+          ? "w-full justify-between px-4 py-3 text-lg font-semibold"
+          : "px-4 py-2 text-xl font-medium",
         hoverBgClass,
         "hover:text-creoSkin-100",
         "hover:shadow-sm",
-        pathname === href
+        pathname === href && href !== '/'
           ? "bg-creoCont-purple shadow-md" : ""
       )}
     >
       {renderIcon}
-      <span className="hidden md:inline tracking-wide">{name}</span>
+      <span className={clsx("tracking-wide", mobile ? "flex-1" : "hidden lg:inline")}>{name}</span>
     </Link>
   );
 }

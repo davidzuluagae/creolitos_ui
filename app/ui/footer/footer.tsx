@@ -20,7 +20,7 @@ export default function Footer() {
             </div>
 
             <div className="container flex flex-col items-center gap-6 text-center md:flex-row md:items-stretch md:justify-between md:text-left">
-                <div className="flex flex-col items-center gap-4 md:flex-row md:items-center">
+                <div className="mt-4 flex flex-col items-center gap-4 md:mt-0 md:flex-row md:items-center">
                     <img
                         src="/creolitos_sm.svg"
                         alt="Creolitos Logo"

@@ -22,7 +22,7 @@ export const navLinks: NavLink[] = [
   {
     name: 'Home',
     description: 'Return to the homepage',
-    href: '',
+    href: '/',
   },
   {
     name: 'About',
@@ -73,11 +73,18 @@ export const navLinks: NavLink[] = [
 
 export interface NavLinksProps {
   className?: string;
+  mobile?: boolean;
+  onItemClick?: () => void;
 }
 
-export default function NavLinks({ className }: NavLinksProps) {
+export default function NavLinks({ className, mobile, onItemClick }: NavLinksProps) {
   return (
-    <div className={`flex flex-row items-center justify-center ${className}`}>
+    <div
+      className={mobile
+        ? `flex flex-col gap-2 ${className ?? ''}`
+        : `flex flex-row items-center justify-center gap-2 ${className ?? ''}`
+      }
+    >
       {navLinks
         .filter(({ disabled }) => !disabled)
         .map(({ name, icon, href, color }) => (
@@ -87,6 +94,8 @@ export default function NavLinks({ className }: NavLinksProps) {
             href={href}
             icon={icon}
             bgColor={color}
+            mobile={mobile}
+            onClick={onItemClick}
           />
         ))}
     </div>
