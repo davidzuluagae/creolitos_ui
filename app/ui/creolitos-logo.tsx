@@ -12,10 +12,10 @@ export function CreolitosLogo({
   showSubtitle 
 }: CreolitosLogoProps) {
   return (
-    <div className={clsx(showSubtitle && "flex flex-col items-center p-0")}>
+    <div className={clsx("flex shrink-0 items-center", showSubtitle && "flex-col items-center p-0")}>
       <Image 
         src={logo} 
-        className={clsx("h-24 w-auto", className)}
+        className={clsx("h-24 w-auto shrink-0 object-contain", className)}
         alt="Creolitos"
         priority
         sizes="(max-width: 768px) 160px, 192px"
@@ -37,10 +37,10 @@ export function CreolitosLogoSM({
   className 
 }: CreolitosLogoSmProps) {
   return (
-    <div className="flex flex-col align-middle p-0">
+    <div className="flex shrink-0 flex-col align-middle p-0">
       <img
         src="/creolitos_sm.svg"
-        className={clsx("hidden md:block h-12 w-auto", className)}
+        className={clsx("h-12 w-auto shrink-0 object-contain", className)}
         alt="Creolitos"
       />
     </div>
