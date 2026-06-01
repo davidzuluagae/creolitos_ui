@@ -7,6 +7,8 @@ import {SolidWavyDivider} from '@/app/ui/dividers';
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const posterSrc = '/hero-poster.jpg';
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -27,6 +29,7 @@ export default function Hero() {
       return;
     }
 
+    setIsVideoReady(false);
     video.load();
     video.play().catch(() => {
       // Mobile browsers can still require a gesture; the poster remains visible.
@@ -35,16 +38,23 @@ export default function Hero() {
 
   return (
     <section className="relative w-full min-h-[100vh] overflow-hidden bg-creoCont-neutral1 md:min-h-[7/8-screen]">
+      <img
+        src={posterSrc}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center md:object-top"
+      />
       <video
         ref={videoRef}
         key={isMobile ? 'mobile' : 'desktop'}
-        className="absolute inset-0 h-full w-full object-cover object-top"
+        className={`absolute inset-0 h-full w-full object-cover object-center md:object-top transition-opacity duration-300 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        poster={isMobile ? '/hero-mobile.png' : '/hero-poster.jpg'}
+        poster={posterSrc}
+        onCanPlay={() => setIsVideoReady(true)}
       >
         <source
           src={isMobile ? '/hero-portrait.mp4' : '/hero-landscape.mp4'}
