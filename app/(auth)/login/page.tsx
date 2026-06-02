@@ -1,13 +1,15 @@
 import LoginClient from './login-client';
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams?: { redirectTo?: string };
+  searchParams?: Promise<{ redirectTo?: string }>;
 }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const redirectTo =
-    typeof searchParams?.redirectTo === 'string' && searchParams.redirectTo.length > 0
-      ? searchParams.redirectTo
+    typeof resolvedSearchParams?.redirectTo === 'string' &&
+    resolvedSearchParams.redirectTo.length > 0
+      ? resolvedSearchParams.redirectTo
       : '/admin';
 
   return <LoginClient redirectTo={redirectTo} />;

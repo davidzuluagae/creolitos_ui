@@ -28,6 +28,8 @@ const config: Config = {
         },
       }),
       fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
         dynapuff: ['DynaPuff', 'sans-serif'],
       },
       gridTemplateColumns: {

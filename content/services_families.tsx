@@ -2,6 +2,7 @@ import StoryTime from '@/content/story_time.mdx';
 import ParentLedSpanish from '@/content/parent-led_spanish.mdx';
 import SRF from '@/content/srf.mdx';
 import Tabs from '@/app/ui/Tabs';
+import ServiceAccordionMobile from '@/app/ui/service-accordion-mobile';
 
 const familyServices = [
   {
@@ -26,7 +27,12 @@ export default function ServicesFamilies() {
     <div className="mb-6">
       <h2>For Families</h2>
       <p>You don't want your child to just learn Spanish; you want them to live it.</p>
-      <Tabs contents={[...familyServices]} />
+      <div className="md:hidden">
+        <ServiceAccordionMobile contents={[...familyServices]} />
+      </div>
+      <div className="hidden md:block">
+        <Tabs contents={[...familyServices]} />
+      </div>
     </div>
   )
 }
