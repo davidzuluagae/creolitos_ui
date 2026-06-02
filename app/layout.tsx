@@ -7,25 +7,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const loadDevFonts = process.env.NODE_ENV !== 'production';
-
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {loadDevFonts ? (
-          <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-            <link
-              href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@400;500;700&display=swap"
-              rel="stylesheet"
-            />
-            <link
-              href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500;700&display=swap"
-              rel="stylesheet"
-            />
-          </>
-        ) : null}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
