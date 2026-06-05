@@ -3,7 +3,7 @@ import Footer from '@/app/ui/footer/footer';
 import About from '@/content/about';
 import ServicesFamilies from '@/content/services_families';
 import Hero from './ui/hero/hero';
-import { WavyDivider, BlobDivider } from '@/app/ui/dividers';
+import { BlobDivider, WavyDivider, GradientDivider } from '@/app/ui/dividers';
 import Social from './ui/footer/social';
 import ServicesInstitutions from '@/content/services_institutions';
 import Methodology from '@/content/methodology';
@@ -75,54 +75,64 @@ export default function Page() {
       </section>
 
       <BlobDivider
-        color="fill-creoCont-mint"
+        color="fill-creoCont-blue"
         colorBottom="fill-creoCont-neutral1"
         flipped={true}
       />
 
-      <section id="contact" className="relative w-full scroll-mt-28 bg-creoCont-mint">
+      <section id="contact" className="relative w-full scroll-mt-28 bg-creoCont-blue">
         <div className="relative z-10">
-          <div id="contact_header" className="w-full bg-creoCont-mint">
+          <div id="contact_header" className="w-full bg-creoCont-blue">
             <h1 className="container text-creoSkin-100 pt-4">Contact Us</h1>
           </div>
-          <div className="container flex flex-col items-center gap-8 p-6 lg:flex-row lg:justify-evenly">
-            <div className="flex w-full max-w-md flex-col justify-evenly gap-4 px-6 text-center lg:grow-[2]">
-              <ContactForm />
-              <div id="follow_us" className="my-2 flex flex-col items-center">
-                <h3 className="my-2 flex font-bold">Follow Us</h3>
-                <div className="flex flex-row gap-10">
-                  <Social
-                    platform="facebook"
-                    username={facebookUser}
-                    className={socialIconClass}
-                    size={50}
-                  />
-                  <Social
-                    platform="instagram"
-                    username={instagramUser}
-                    className={socialIconClass}
-                    size={50}
-                  />
-                  <Social
-                    platform="youtube"
-                    username={youtubeUser}
-                    className={socialIconClass}
-                    size={50}
-                  />
+          <GradientDivider
+            fromClassName="from-creoCont-blue"
+            toClassName="to-creoCont-blue-soft"
+          />
+
+          <div className=" bg-creoCont-blue-soft">
+            <div className="container flex flex-col items-center gap-8 p-6 lg:flex-row lg:justify-evenly bg-creoCont-blue-soft">
+              <div className="flex w-full max-w-md flex-col justify-evenly gap-4 px-6 text-center lg:grow-[2]">
+                <ContactForm />
+                <div id="follow_us" className="my-2 flex flex-col items-center">
+                  <h3 className="my-2 flex font-bold">Follow Us</h3>
+                  <div className="flex flex-row gap-10">
+                    <Social
+                      platform="facebook"
+                      username={facebookUser}
+                      className={socialIconClass}
+                      size={50}
+                    />
+                    <Social
+                      platform="instagram"
+                      username={instagramUser}
+                      className={socialIconClass}
+                      size={50}
+                    />
+                    <Social
+                      platform="youtube"
+                      username={youtubeUser}
+                      className={socialIconClass}
+                      size={50}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="mx-auto w-full max-w-md lg:max-w-xl lg:flex-none">
-              <MaskedImage
-                className="w-full"
-                src="/contact_enh_img.jpg"
-                mask="blob-2"
-                alt="Contact Ms. Maria"
-                sizes="(max-width: 1024px) 100vw, 576px"
-              />
+              <div className="mx-auto w-full max-w-md lg:max-w-xl lg:flex-none">
+                <MaskedImage
+                  className="w-full"
+                  src="/contact_enh_img.jpg"
+                  mask="blob-2"
+                  alt="Contact Ms. Maria"
+                  sizes="(max-width: 1024px) 100vw, 576px"
+                />
+              </div>
             </div>
           </div>
-          <WavyDivider colorBottom="fill-creoCont-blue" />
+          <WavyDivider
+            color="fill-creoCont-blue-soft"
+            colorBottom="fill-creoCont-blue"
+          />
         </div>
       </section>
 

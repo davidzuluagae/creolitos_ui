@@ -99,7 +99,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`rounded-xl bg-creoSkin-300 px-4 py-3 font-semibold text-creoSkin-400 transition-colors hover:text-creoSkin-100 focus:outline-none focus:ring-2 focus:ring-creoCont-purple focus:ring-offset-2 ${isSubmitting ? 'cursor-not-allowed opacity-70' : ''}`}
+          className={`rounded-xl bg-creoCont-pink px-4 py-3 font-semibold text-creoSkin-100 shadow-sm transition-colors hover:bg-creoCont-purple hover:shadow-md focus:outline-none focus:ring-2 focus:ring-creoCont-pink focus:ring-offset-2 ${isSubmitting ? 'cursor-not-allowed opacity-70' : ''}`}
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>

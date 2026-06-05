@@ -1,9 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { BookOpenText, Drama, Earth, type LucideIcon } from 'lucide-react'
+
 
 type MethodologyPillar = {
   title: string
+  icon: LucideIcon
   description: string
   chipColor: string
   borderColor: string
@@ -19,6 +22,7 @@ const challengePoints = [
 const methodologyPillars: MethodologyPillar[] = [
   {
     title: 'Storytelling',
+    icon: BookOpenText,
     description: 'Language grows through narrative, rhythm, repetition, and emotional connection.',
     chipColor: 'bg-creoCont-pink',
     borderColor: 'border-creoCont-pink',
@@ -26,6 +30,7 @@ const methodologyPillars: MethodologyPillar[] = [
   },
   {
     title: 'Performance & Movement',
+    icon: Drama,
     description: 'Songs, gesture, and embodied play help learners participate with confidence.',
     chipColor: 'bg-creoCont-yellow',
     borderColor: 'border-creoCont-yellow',
@@ -33,6 +38,7 @@ const methodologyPillars: MethodologyPillar[] = [
   },
   {
     title: 'Cultural Context',
+    icon: Earth,
     description: 'Language becomes meaningful when it is tied to identity, tradition, and lived experience.',
     chipColor: 'bg-creoCont-purple',
     borderColor: 'border-creoCont-purple',
@@ -60,6 +66,7 @@ const outcomes = [
 
 function MethodologyFlipCard({
   title,
+  icon: Icon,
   description,
   chipColor,
   borderColor,
@@ -74,7 +81,7 @@ function MethodologyFlipCard({
     <button
       type="button"
       onClick={onToggle}
-      className="group h-72 w-full cursor-pointer text-left transition-transform duration-200 hover:-translate-y-1 [perspective:1200px] sm:flex-1"
+      className="group mx-auto h-72 w-56 max-w-full cursor-pointer text-left transition-transform duration-200 hover:-translate-y-1 [perspective:1200px] sm:w-full sm:max-w-none sm:flex-1"
       aria-pressed={isFlipped}
       aria-label={`${title}: flip card to read more`}
     >
@@ -86,8 +93,9 @@ function MethodologyFlipCard({
         <div
           className={`absolute inset-0 flex h-full flex-col justify-between rounded-3xl px-4 py-5 text-creoSkin-100 shadow-lg [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:rotateY(0deg)_translateZ(1px)] ${bgColor}`}
         >
-          <div className="flex flex-1 items-center justify-center px-3 text-center">
-            <h4 className="w-full text-lg leading-tight">{title}</h4>
+          <div className="flex flex-1 flex-col items-center justify-center gap-6 px-3 text-center">
+            <h4 className="w-full text-xl leading-tight sm:text-2xl">{title}</h4>
+            <Icon className="h-10 w-10 shrink-0" aria-hidden="true" />
           </div>
           <div className="mt-4 flex items-center justify-between gap-3 text-sm text-creoSkin-200">
             <span>Flip to learn more</span>
@@ -98,13 +106,15 @@ function MethodologyFlipCard({
         </div>
 
         <div
-          className={`absolute inset-0 flex h-full flex-col justify-between rounded-3xl border-4 bg-creoCont-neutral1 px-4 py-5 shadow-lg [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:rotateY(180deg)_translateZ(1px)] ${borderColor}`}
+          className={`absolute inset-0 grid h-full grid-rows-[auto_1fr_auto] rounded-3xl border-4 bg-creoCont-neutral1 px-4 py-5 shadow-lg [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:rotateY(180deg)_translateZ(1px)] ${borderColor}`}
         >
           <div className="space-y-3">
             <span className={`${chipColor} inline-flex rounded-full px-3 py-1 text-xs font-semibold`}>
               {title}
             </span>
-            <p className="text-sm leading-relaxed">{description}</p>
+          </div>
+          <div className="flex items-center justify-center px-2 text-center">
+            <p className="text-base leading-relaxed">{description}</p>
           </div>
           <div className="flex items-center justify-end text-creoSkin-200">
             <span className="inline-flex text-2xl transition-transform duration-200 group-hover:rotate-[-20deg] group-hover:translate-x-0.5">
@@ -145,14 +155,15 @@ export default function Methodology() {
             <h3>The Creolitos Approach</h3>
           </div>
 
-          <div className="flex flex-col gap-4 sm:flex-row">
-            {methodologyPillars.map(({ title, description, chipColor, borderColor, bgColor }, index) => {
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-stretch">
+            {methodologyPillars.map(({ title, icon, description, chipColor, borderColor, bgColor }, index) => {
               const isFlipped = flippedCards.includes(index)
 
               return (
                 <MethodologyFlipCard
                   key={title}
                   title={title}
+                  icon={icon}
                   description={description}
                   chipColor={chipColor}
                   borderColor={borderColor}

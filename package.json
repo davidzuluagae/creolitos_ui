@@ -23,6 +23,7 @@
     "framer-motion": "^12.40.0",
     "jwt-decode": "^4.0.0",
     "lodash": "^4.18.1",
+    "lucide-react": "^1.17.0",
     "next": "16.2.6",
     "next-auth": "4.24.13",
     "nodemailer": "^7.0.13",

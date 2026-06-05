@@ -134,6 +134,36 @@ export const BlobDivider: React.FC<DividerProps> = ({
   </div>
 );
 
+type GradientDividerProps = {
+  fromClassName?: string;
+  toClassName?: string;
+  className?: string;
+  flipped?: boolean;
+};
+
+export const GradientDivider: React.FC<GradientDividerProps> = ({
+  fromClassName = "from-creoCont-blue",
+  toClassName = "to-creoCont-blue-soft",
+  className,
+  flipped = false,
+}) => (
+  <div
+    className={clsx(
+      "relative w-full overflow-hidden leading-none",
+      className,
+      { "rotate-180": flipped }
+    )}
+  >
+    <div
+      className={clsx(
+        "h-24 w-full bg-gradient-to-b",
+        fromClassName,
+        toClassName
+      )}
+    />
+  </div>
+);
+
 export function StickFigureDivider({
   topColor = "#BFA2DB",
   bottomColor = "#A6E3B5",

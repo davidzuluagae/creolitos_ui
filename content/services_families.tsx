@@ -18,7 +18,7 @@ const familyServices = [
   {
     name: 'Creolitos Storytime™',
     info: <StoryTime />,
-    imageSrc: '/Storytime.jpg',
+    imageSrc: '/IMG_9524.jpg',
   },
 ] as const
 
