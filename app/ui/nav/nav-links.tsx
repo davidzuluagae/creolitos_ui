@@ -67,7 +67,7 @@ export const navLinks: NavLink[] = [
     name: 'Contact',
     description: 'Get in touch with us',
     href: '#contact',
-    color: 'mint',
+    color: 'blue',
   },
 ];
 
