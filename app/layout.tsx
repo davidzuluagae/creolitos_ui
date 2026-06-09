@@ -1,6 +1,7 @@
 import '@/app/ui/global.css';
 import { montserrat } from '@/app/ui/fonts';
 import Providers from '@/app/providers';
+import { Analytics } from '@vercel/analytics/next';
 
 export default function RootLayout({
   children,
@@ -30,6 +31,7 @@ export default function RootLayout({
         <Providers>
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
